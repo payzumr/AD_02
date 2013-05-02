@@ -1,5 +1,5 @@
 /* 
- * Klasse zum Erzeugen der Robot Übersicht
+ * Klasse zum Erzeugen der Robot Ãœbersicht
  */
 
 package gui;
@@ -85,7 +85,7 @@ public class textFenster extends JFrame implements textFenster_interface  {
 		zeile[robot][1].setText("X:"+xPos + " Y:" + yPos);		// Position aktualisieren
 		zeile[robot][2].setText("X:"+xZiel + " Y:" + yZiel);	// Ziel aktualisieren
 		if (ladung == null) {		
-			zeile[robot][3].setText("tba");						// ToDo! Noch gibts immer nur null übergeben....
+			zeile[robot][3].setText("tba");						// ToDo! Noch gibts immer nur null Ã¼bergeben....
 		}
 		
 		

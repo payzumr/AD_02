@@ -56,7 +56,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 		setJMenuBar(menuBar);
 
 		/* Menï¿½ Datei erzeugen */
-		JMenu menuDatei = new JMenu("Menü");
+		JMenu menuDatei = new JMenu("MenÃ¼");
 		menuBar.add(menuDatei);
 
 		/* Ende */

@@ -10,7 +10,7 @@ public interface HauptFrame_interface {
     /* Zeigt Fehlermeldung bei Fehlverhalten*/
     public void abbruch(String Fehlermeldung);
       
-    /* Zeigt Übersicht nach erfolgreichem Abarbeiten der Auftraege*/
+    /* Zeigt Ãœbersicht nach erfolgreichem Abarbeiten der Auftraege*/
     public void beendet(int takte, int anzahlAuftraege);
     
     

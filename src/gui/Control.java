@@ -8,24 +8,24 @@ package gui;
  *(Syntax wird im file und Methodenrumpf beschrieben)
  *Aus den Konfigurationsdaten wird dann die Simulation
  *initialisiert.
- *Die Simulation kann von außen wärend des laufens 
- *beeinflusst werden , hierfür sind die folgenden Methoden des 
+ *Die Simulation kann von auÃŸen wÃ¤hrend des laufens
+ *beeinflusst werden , hierfÃ¼r sind die folgenden Methoden des
  *Interfaces vorgesehen 
  */
 public interface Control {
 	
 	/**
-	 * Lässt den nächsten Simulationsschritt sofort ausführen
+	 * LÃ¤sst den nÃ¤chsten Simulationsschritt sofort ausfÃ¼hren
 	 */
 	public void next_simuation();
 	
 	/**
-	 * Hällt den Simulationszyklus an
+	 * HÃ¤lt den Simulationszyklus an
 	 */
 	public void pause_simuation();
 	
 	/**
-	 * Setzt die Simulation im Standard Interwall fort
+	 * Setzt die Simulation im Standard Interval fort
 	 */
 	public void run_simuation();
 	
@@ -34,8 +34,8 @@ public interface Control {
 	//public void restart_simulation();
 	
 	//Vermerk notwengig an gui???
-	//Aufbereitetes Feld in Format auf das wir  uns einigen müssen
-	//Aktuelle Informationen über Roboter und Auftragsabarbeitung + (Urauftrag?)
+	//Aufbereitetes Feld in Format auf das wir  uns einigen mÃ¼ssen
+	//Aktuelle Informationen Ã¼ber Roboter und Auftragsabarbeitung + (Urauftrag?)
 		
 	//Vermerk von GUI ??
 	//Konstruktor mit notwendigen Initdaten
