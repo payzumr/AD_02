@@ -5,25 +5,21 @@ import java.util.*;
 import model.*;
 
 public class ReadCSV {
-	private File configFile;
-	private File itemsFile;
-	private String delimiter;
-	private List<Item> itemList;
-	private ArrayList<String> liste;
-	private File orderFile;
-	private ArrayList orderArr;
+    private String delimiter;
+    private final ArrayList<String> liste;
+    private ArrayList orderArr;
 	private String zeile = null;
 	private int counter = 0;
 
 	// Konstruktor
 	// bekommt als parameter den pfad der ini datei als string übergeben.
-	public ReadCSV(String inipfad) throws FileNotFoundException, IOException {
+	public ReadCSV(String inipfad) throws IOException {
 		// liste initialisieren
-		liste = new ArrayList<String>();
+		liste = new ArrayList<>();
 		// ini datei einlesen und die einzelnen pfade speichern,.
 		try (BufferedReader bReader = new BufferedReader(
 				new FileReader(inipfad))) {
-			String line = null;
+			String line;
 			while ((line = bReader.readLine()) != null) {
 				liste.add(line);
 			}
@@ -31,7 +27,7 @@ public class ReadCSV {
 		}
 
 		// orderpfad hollen und in einem bufferedReader speichern.
-		orderFile = new File(liste.get(2).split("=")[1].trim());
+        File orderFile = new File(liste.get(2).split("=")[1].trim());
 		BufferedReader tmpFile = new BufferedReader(new FileReader(orderFile));
 
 		orderArr = new ArrayList<String>();
@@ -47,10 +43,10 @@ public class ReadCSV {
 	}
 
 	// config.csv laden und die Variablen initialisieren
-	public void readConfig() throws FileNotFoundException, IOException {
+	public void readConfig() throws IOException {
 		/* liste inhalt zugehörigen variable zuweisen */
 		// pfade von config und Delimeter wird gespeichert
-		this.configFile = new File(liste.get(0).split("=")[1].trim());
+        File configFile = new File(liste.get(0).split("=")[1].trim());
 		this.delimiter = liste.get(3).split(" ")[2].trim();
 
 		BufferedReader tmpFile = new BufferedReader(new FileReader(configFile));
@@ -83,7 +79,7 @@ public class ReadCSV {
 
 		// Schreibt die items in die csv datei
 		try (PrintWriter erzeugteDatei = new PrintWriter(new BufferedWriter(
-				new FileWriter(outfile)));) {
+				new FileWriter(outfile)))) {
 			erzeugteDatei.println("item_id" + ";" + "productPosX" + ";"
 					+ "productPosY" + ";" + "productSize");
 
@@ -109,13 +105,13 @@ public class ReadCSV {
 	// Item liste einlesen
 	public List<Item> readItems() throws IOException {
 
-		itemList = new ArrayList<Item>();
+        List<Item> itemList = new ArrayList<>();
 		// items.csv pfad speichern
-		itemsFile = new File(liste.get(1).split("=")[1].trim());
+        File itemsFile = new File(liste.get(1).split("=")[1].trim());
 
 		BufferedReader tmpFile = new BufferedReader(new FileReader(itemsFile));
 
-		String zeile = null;
+		String zeile;
 
 		// header überspringen
 		tmpFile.readLine();
@@ -147,10 +143,10 @@ public class ReadCSV {
 	// Order einlesen
 	public Map<Item, Integer> readOrder(List<Item> item) {
 
-		int tmpId = 0;
-		int menge = 0;
+		int tmpId;
+		int menge;
 
-		Map<Item, Integer> retMap = new TreeMap<Item, Integer>();
+		Map<Item, Integer> retMap = new TreeMap<>();
 
 		// flag zum setzten ob order fertig oder nicht
 		boolean orderComplete = false;
@@ -202,23 +198,25 @@ public class ReadCSV {
 
 					//falls das selbe item nicht mehr rein passt
 					// dann..
-					if ((gw + tempItem.size()) > currentMaxSize) {
-						// entfernt item aus mit der Alten menge und f�gt das
-						// item mit der neuen menge hinzu
-						orderArr.remove(counter);
+                    if (tempItem != null) {
+                        if ((gw + tempItem.size()) > currentMaxSize) {
+                            // entfernt item aus mit der Alten menge und f�gt das
+                            // item mit der neuen menge hinzu
+                            orderArr.remove(counter);
 
-						orderArr.add(counter, tmpId + ";"
-								+ (menge - countSameItem));
-						retMap.put(tempItem, countSameItem);
-						if ((menge - countSameItem) == 0) {
-							// counter z�hlen um n�chstes item zu hollen
-							counter++;
-						}
-						orderComplete = true;
-						break;
-					}
+                            orderArr.add(counter, tmpId + ";"
+                                    + (menge - countSameItem));
+                            retMap.put(tempItem, countSameItem);
+                            if ((menge - countSameItem) == 0) {
+                                // counter z�hlen um n�chstes item zu hollen
+                                counter++;
+                            }
+                            orderComplete = true;
+                            break;
+                        }
+                    }
 
-				}
+                }
 
 			
 				if (!orderComplete) {
@@ -243,10 +241,12 @@ public class ReadCSV {
 							}
 						}
 
-						if ((gw + tempItem.size()) > currentMaxSize) {
-							orderComplete = true;
-						}
-					} else {
+                        if (tempItem != null) {
+                            if ((gw + tempItem.size()) > currentMaxSize) {
+                                orderComplete = true;
+                            }
+                        }
+                    } else {
 						orderComplete = true;
 					}
 

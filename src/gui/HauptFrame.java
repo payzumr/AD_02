@@ -16,31 +16,30 @@ import model.*;
 public class HauptFrame extends JFrame implements HauptFrame_interface {
 
 	/* --------- Variablen ------------ */
-	private Simulation controller;
+	private final Simulation controller;
 	private JMenuItem startEntry;
 	private JPanel hauptpane;
-	JLabel[][] feld;
-	textFenster textFenster;
+	private JLabel[][] feld;
+	private textFenster textFenster;
 	private JToggleButton pauseButton;
 	private boolean paused = false;
-	static HauptFrame myMainWindow;
-	int[] RobotPosX;
-	int[] RobotPosY;
+	private static HauptFrame myMainWindow;
+	private int[] RobotPosX;
+	private int[] RobotPosY;
 	private int fields;
-	// Festlegen der max Fenstergr��e
-	private Dimension screen = new Dimension((int) ((Toolkit
-			.getDefaultToolkit().getScreenSize().width) * 0.75),
-			(int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * 0.75));
 
-	public HauptFrame(Simulation controller) {
+    public HauptFrame(Simulation controller) {
 		this.controller = controller;
 		myMainWindow = this;
 
 		setTitle("Warehouse 13.37");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocation(200, 200);
 		setMinimumSize(new Dimension(400, 400));
-		setMaximumSize(screen);
+        Dimension screen = new Dimension((int) ((Toolkit
+                .getDefaultToolkit().getScreenSize().width) * 0.75),
+                (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * 0.75));
+        setMaximumSize(screen);
 		erzeugeMenus();
 		erzeugeAnzeige();
 		pack();
@@ -98,7 +97,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 
 	}
 
-	public void erzeugeAnzeige() {
+	void erzeugeAnzeige() {
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		hauptpane = new JPanel();
@@ -178,10 +177,10 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 		textFenster = new textFenster(robots);
 		textFenster.setBounds(myMainWindow.getX() + myMainWindow.getWidth(), myMainWindow.getY(), 100, myMainWindow.getHeight());
 
-	};
+	}
 
-	
-	/* Aktualisiert Warenhaus ansicht */
+
+    /* Aktualisiert Warenhaus ansicht */
 	public void showRobotState(final int robotName, final int xPos, final int yPos,
 			Item[] ladung, final int xZiel, final int yZiel, final Status status) {
 		
@@ -245,10 +244,10 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 	/* Zeigt Fehlermeldung bei Fehlverhalten */
 	public void abbruch(String fehlermeldung) {
 		textFenster.abbruch(fehlermeldung);
-	};
+	}
 
-	/* Zeigt �bersicht nach erfolgreichem Abarbeiten der Auftraege */
+    /* Zeigt �bersicht nach erfolgreichem Abarbeiten der Auftraege */
 	public void beendet(int benoetigteTakte, int summeAuftraege) {
 		textFenster.beendet(benoetigteTakte, summeAuftraege);
-	};
+	}
 }

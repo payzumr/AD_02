@@ -2,9 +2,9 @@ package model;
 
 public class StorageAreaImpl implements StorageArea {
     private int amountOfRobots;
-    private int coordinateX;
-    private int coordinateY;
-    private Item item;
+    private final int coordinateX;
+    private final int coordinateY;
+    private final Item item;
     private int robotId;
 
     public StorageAreaImpl(Item item) {

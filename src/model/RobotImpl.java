@@ -13,14 +13,14 @@ public class RobotImpl implements Robot {
     private int currentPosX;
     private int currentPosY;
     private boolean busy;
-    private Status status;
-    private Field[][] field;
+    private final Status status;
+    private final Field[][] field;
     
     private int[] target;
     
     private Map<Item, Integer> order;
-    private Random random = new Random();
-    private DecimalFormat df = new DecimalFormat("00");
+    private final Random random = new Random();
+    private final DecimalFormat df = new DecimalFormat("00");
 
     public RobotImpl(int id, int startPosX, int startPosY, Field[][] field) {
         this.id = id;
@@ -102,7 +102,7 @@ public class RobotImpl implements Robot {
      * @return Wenn die Liste leer ist, wird die Startposition zurueckgegeben,
      *         ansonsten die Koordinaten des ersten Elements aus der Liste.
      */
-    public int[] destination() {
+    int[] destination() {
 
         int[] result;
         int[] startPos = { startPosY, startPosX };
@@ -188,14 +188,11 @@ public class RobotImpl implements Robot {
      * @return TRUE bei freiem Feld, sonst FALSE
      */
     private boolean fieldFree(int positionY, int positionX) {
-        if (positionY < Simulation.N && positionX < Simulation.N
+        return positionY < Simulation.N && positionX < Simulation.N
                 && positionY > -1 && positionX > -1
                 && (!field[positionY][positionX].isBoxingPlant()
-                        || (positionY == startPosY && positionX == startPosX)) && field[positionY][positionX].robotID() == 0) {
-            return true;
-        }
+                || (positionY == startPosY && positionX == startPosX)) && field[positionY][positionX].robotID() == 0;
 
-        return false;
     }
 
     /**
@@ -275,7 +272,7 @@ public class RobotImpl implements Robot {
      * Entfernt den ersten Eintrag aus der Map, nachdem das Item geholt wurde.
      * @return Gibt das entfernte Item zurueck.
      */
-    public Entry<Item, Integer> remove() {
+    Entry<Item, Integer> remove() {
         return ((TreeMap<Item, Integer>) order).pollFirstEntry();
     }
 

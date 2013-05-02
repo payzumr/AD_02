@@ -3,8 +3,8 @@ package model;
 public class FieldImpl implements Field {
     private int amountOfRobots;
     private int robotId;
-    private int coordinateX;
-    private int coordinateY;
+    private final int coordinateX;
+    private final int coordinateY;
     private int id; 
 
     /**

@@ -4,11 +4,10 @@ import java.util.*;
 
 public class Item implements Comparable<Item> {
 	
-    private int productPosX;
-    private int productPosY;
-    private int productSize; //so was wie gewicht
-    private int item_id;
-    private static int idCounter;
+    private final int productPosX;
+    private final int productPosY;
+    private final int productSize; //so was wie gewicht
+    private final int item_id;
 
     public Item(int productPosX, int productPosY, int productSize, int item_id) {
         this.productPosX = productPosX;
@@ -53,8 +52,8 @@ public class Item implements Comparable<Item> {
          temp_ORDERMAXSIZE = ORDERMAXSIZE */
       
         int maxSize;
-        List<Item> itemList = new ArrayList<Item>();
-        idCounter = 1;
+        List<Item> itemList = new ArrayList<>();
+        int idCounter = 1;
         
 
         for (int y = 0; y < temp_N - 1; y++) {

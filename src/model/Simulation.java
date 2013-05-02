@@ -3,7 +3,6 @@ package model;
 import gui.*;
 import java.io.IOException;
 import java.util.List;
-import java.util.TreeMap;
 
 
 /**
@@ -43,12 +42,12 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
     public static  int NUMROBOTS = NUMBOXINGPLANTS; //Anzahl der robotter
     public static  int CLTIME = 1; //vermutung irgenwas mit der verpackzeit ????
     public static  int PPTIME = 5; //vermutung irgenwas mit der verpackzeit ????
-    public static  int refreshtime = 500  ; // die Zeit bis zum n�chsten schritt in ms 10*1000 = 10 Sekunden
+    private static final int refreshtime = 500  ; // die Zeit bis zum n�chsten schritt in ms 10*1000 = 10 Sekunden
     public static boolean TEST = false; //teststeuerung der vorgruppe
     
     private Warehouse whouse; // internes Handle f�r das Warenhaus
     private boolean simstatus; // interne anzeige f�r den Simulations (takte &sim) //true bei sim run
-    private HauptFrame_interface gui;
+    private final HauptFrame_interface gui;
    
     
     
@@ -58,7 +57,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 	 * und Gui Instanzieren 
 	 * ende Init �bergang zum simulationsmodus
 	 */
-	public Simulation(){
+    private Simulation(){
 		simstatus=false; //stat ist falste bei sim //true zu testzwecken
 		//________________________________________start csv
 		
@@ -123,7 +122,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 	 */
 	private void simulation_run(){
 		int takt = 1; //taktz�hler gegen endlosschleife �bernommen
-		while(!whouse.done()&& takt < 30000 /*exit option optional*/){
+		while(whouse.done() && takt < 30000 /*exit option optional*/){
 			if(this.simstatus){//wenn sim true , schlafe
 				try {
 					Thread.sleep(Simulation.refreshtime); //verz�gerung anhand der refreshtime
@@ -165,27 +164,26 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 	 * @param Array der Boxingplants
 	 */
 	 private void updateDisplay(BoxingPlant[] temp){
-	     for(int i = 0; i < temp.length ; i++){
-	         Robot rob = temp[i].getRobot();
-	         if (rob != null){
-	        	 int dx;
-	        	 int dy;
-	        	 int id = rob.id();
-	        	 int curentx = rob.getCurrentPosX();
-	        	 int curenty = rob.getCurrentPosY();
-	        	 int[] dest = rob.getTarget();
-	        	 if (rob.getOrder().isEmpty() !=true){
-	        		 dx = dest[1];
-	        		 dy = dest[0];
-	        	 }
-	        	 else {
-	        		dx = rob.getStartPosX(); 
-	        		dy = rob.getStartPosY(); 
-	        	 }
-	                	 
-	        	 gui.showRobotState(id, curentx, curenty, null, dx, dy, rob.getStatus());
-	         	}
-	     }
+         for (BoxingPlant aTemp : temp) {
+             Robot rob = aTemp.getRobot();
+             if (rob != null) {
+                 int dx;
+                 int dy;
+                 int id = rob.id();
+                 int curentx = rob.getCurrentPosX();
+                 int curenty = rob.getCurrentPosY();
+                 int[] dest = rob.getTarget();
+                 if (!rob.getOrder().isEmpty()) {
+                     dx = dest[1];
+                     dy = dest[0];
+                 } else {
+                     dx = rob.getStartPosX();
+                     dy = rob.getStartPosY();
+                 }
+
+                 gui.showRobotState(id, curentx, curenty, null, dx, dy, rob.getStatus());
+             }
+         }
 	 }
 	
 	public void starteSimulation(){

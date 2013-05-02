@@ -16,24 +16,22 @@ import model.*;
 
 public class textFenster extends JFrame implements textFenster_interface  {
 
-	int robots;
-	JLabel[][] zeile;
-	JPanel hauptpane;
-	JPanel gridPane;
-	JPanel ueberschriftPane;
+    private final JLabel[][] zeile;
+	private final JPanel hauptpane;
+	private final JPanel gridPane;
+	private final JPanel ueberschriftPane;
 
-	private Dimension screen = new Dimension((int) ((Toolkit
-			.getDefaultToolkit().getScreenSize().width) * 0.75),
-			(int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * 0.75));
-
-	public textFenster(int robots) {
-		this.robots = robots;
+    public textFenster(int robots) {
+        int robots1 = robots;
 		
 		setTitle("Robot Uebersicht");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocation(700, 200);
 		setMinimumSize(new Dimension(300, 300));
-		setMaximumSize(screen);
+        Dimension screen = new Dimension((int) ((Toolkit
+                .getDefaultToolkit().getScreenSize().width) * 0.75),
+                (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * 0.75));
+        setMaximumSize(screen);
 
 		hauptpane = new JPanel();
 		getContentPane().add(hauptpane);

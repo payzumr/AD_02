@@ -3,13 +3,13 @@ package model;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class Order {
+class Order {
 
-    private Map<Item, Integer> order;
+    private final Map<Item, Integer> order;
 
     // Public Konstruktor zum Anlegen von Testfaellen
     public Order() {
-        order = new TreeMap<Item, Integer>();
+        order = new TreeMap<>();
     }
 
     // Zum Testen
@@ -39,12 +39,12 @@ public class Order {
     public static Map<Item, Integer> factory(List<Item> items) {
         int temp_ORDERMAXSIZE = (Simulation.TEST) ? JUnitTestframe.ORDERMAXSIZE : Simulation.ORDERMAXSIZE;
 
-        Map<Item, Integer> orderMap = new TreeMap<Item, Integer>();
+        Map<Item, Integer> orderMap = new TreeMap<>();
         boolean orderComplete = false;
         int randomItem;
         int currentOrderSize = temp_ORDERMAXSIZE;
         Item tempItem = null;
-        Integer tempQuantity = 0;
+        Integer tempQuantity;
 
         while (!orderComplete) {
 
@@ -58,22 +58,24 @@ public class Order {
             }
 
             // Wenn das neue Random Item zu gross ist, wird es nicht mehr hinzugefuegt
-            if ((currentOrderSize - tempItem.size()) >= 0) {
+            if (tempItem != null) {
+                if ((currentOrderSize - tempItem.size()) >= 0) {
 
-                // Wenn das Item in der Map vorhanden ist, wird die Quantity vom Item erhoeht,
-                // ansonten wird es neu angelegt
-                if (orderMap.containsKey(tempItem)) {
+                    // Wenn das Item in der Map vorhanden ist, wird die Quantity vom Item erhoeht,
+                    // ansonten wird es neu angelegt
+                    if (orderMap.containsKey(tempItem)) {
 
-                    tempQuantity = orderMap.get(tempItem);
-                    tempQuantity++;
+                        tempQuantity = orderMap.get(tempItem);
+                        tempQuantity++;
+                    } else {
+                        tempQuantity = 1;
+                    }
+
+                    orderMap.put(tempItem, tempQuantity);
+                    currentOrderSize -= tempItem.size();
                 } else {
-                    tempQuantity = 1;
+                    orderComplete = true;
                 }
-
-                orderMap.put(tempItem, tempQuantity);
-                currentOrderSize -= tempItem.size();
-            } else {
-                orderComplete = true;
             }
         }
 
@@ -85,8 +87,8 @@ public class Order {
         StringBuilder output = new StringBuilder();
 
         for (Entry<Item, Integer> element : order.entrySet()) {
-            output.append("Item ID: " + element.getKey());
-            output.append(" Menge: " + element.getValue());
+            output.append("Item ID: ").append(element.getKey());
+            output.append(" Menge: ").append(element.getValue());
         }
 
         return output.toString();

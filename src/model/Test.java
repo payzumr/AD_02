@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class Test {
-    public static void testItem_Order_factory() {
+    private static void testItem_Order_factory() {
         System.out.println("\ntestItem_Order_factory()\n");
 
         System.out.println("N: " + Simulation.N);
@@ -33,7 +33,7 @@ public class Test {
         }
     }
 
-    public static void testWarehouseImpl_factory() {
+    private static void testWarehouseImpl_factory() {
         System.out.println("\ntestWarehouseImpl_factory()\n");
 
 //        Warehouse wh = new WarehouseImpl();

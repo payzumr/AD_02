@@ -8,7 +8,7 @@ public class WarehouseImpl implements Warehouse {
     private Queue<Map<Item, Integer>> orderQueue;
     private BoxingPlant[] bplants;
     private boolean done;
-    private DecimalFormat df = new DecimalFormat("00");
+    private final DecimalFormat df = new DecimalFormat("00");
 
     public WarehouseImpl() {
         new WarehouseImpl(Item.factory());
@@ -19,7 +19,7 @@ public class WarehouseImpl implements Warehouse {
         int temp_NUMBOXINGPLANTS = (Simulation.TEST) ? JUnitTestframe.NUMBOXINGPLANTS : Simulation.NUMBOXINGPLANTS;
 
         warehouse = new Field[temp_N][temp_N];
-        orderQueue = new LinkedList<Map<Item, Integer>>();
+        orderQueue = new LinkedList<>();
         bplants = new BoxingPlant[temp_NUMBOXINGPLANTS];
         done = false;
 
@@ -69,20 +69,20 @@ public class WarehouseImpl implements Warehouse {
         }
 
         // Wenn Bestellungen vorliegen
-        for (int i = 0; i < bplants.length; i++) {
+        for (BoxingPlant bplant : bplants) {
             if (!orderQueue.isEmpty()) {
                 // freie bPlant suchen
                 idle = findIdleBPlant();
-                
+
                 // dieser die Bestellung zuweisen
                 if (idle != 0) {
                     bplants[idle - 1].receiveOrder(orderQueue.remove());
-                    
+
                 }
             }
 
             // allen bplants nacheinander ein action-Signal geben
-            bplants[i].action();
+            bplant.action();
         }
     }
 
@@ -111,8 +111,8 @@ public class WarehouseImpl implements Warehouse {
      * Kontrolliert ob alle bplants fertig sind
      */
     private boolean bPlantsDone() {
-        for (int i = 0; i < bplants.length; i++) {
-            if (bplants[i].isBusy()) {
+        for (BoxingPlant bplant : bplants) {
+            if (bplant.isBusy()) {
                 return false;
             }
         }
@@ -121,10 +121,10 @@ public class WarehouseImpl implements Warehouse {
     }
 
     public boolean done() {
-        return done;
+        return !done;
     }
 
-    public String toStringMini() {
+    String toStringMini() {
         int temp_N = (Simulation.TEST) ? JUnitTestframe.N : Simulation.N;
 
         StringBuilder ret = new StringBuilder();
@@ -134,16 +134,16 @@ public class WarehouseImpl implements Warehouse {
         }
         ret.append('\n');
 
-        for (int y = 0; y < warehouse.length; y++) {
+        for (Field[] aWarehouse : warehouse) {
             ret.append('#');
 
             for (int x = 0; x < warehouse.length; x++) {
-                if (warehouse[y][x].hasRobots() > 1) {
+                if (aWarehouse[x].hasRobots() > 1) {
                     ret.append('X');
-                } else if (warehouse[y][x].hasRobots() == 1) {
-                    ret.append(warehouse[y][x].robotID());
+                } else if (aWarehouse[x].hasRobots() == 1) {
+                    ret.append(aWarehouse[x].robotID());
                 } else {
-                    if (warehouse[y][x].isBoxingPlant()) {
+                    if (aWarehouse[x].isBoxingPlant()) {
                         ret.append('B');
                     } else {
                         ret.append('.');
@@ -162,9 +162,9 @@ public class WarehouseImpl implements Warehouse {
         return ret.toString();
     }
 
-    public String toStringMaxi() {
+    String toStringMaxi() {
 
-        int border = (Simulation.TEST) ? JUnitTestframe.N : Simulation.N;
+        int border;
         
         StringBuilder output = new StringBuilder();
         StringBuilder xFrame = new StringBuilder("####");

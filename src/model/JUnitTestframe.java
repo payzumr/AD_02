@@ -32,8 +32,8 @@ public class JUnitTestframe {
     public static int N;
     public static int NUMBOXINGPLANTS;
     public static int ORDERMAXSIZE;
-    public static int MAXCAPACITY;
-    public static int NUMROBOTS;
+    private static int MAXCAPACITY;
+    private static int NUMROBOTS;
     public static int PPTIME;
     public static int CLTIME;
 
@@ -261,14 +261,14 @@ public class JUnitTestframe {
             }	 
 
             // sortierbare keylist aus der map erstellen (item ID)
-            List<Integer> keyList = new ArrayList<Integer>();
+            List<Integer> keyList = new ArrayList<>();
             for (Item i : testOrder.getMap().keySet()) {
                 keyList.add(i.id());
             }
             Collections.sort(keyList);
 
             // sortierbare valuelist aus der map erstellen (quantity)
-            List<Integer> valueList = new ArrayList<Integer>();
+            List<Integer> valueList = new ArrayList<>();
             for (Integer i : testOrder.getMap().values()) {
                 valueList.add(i);
             }
