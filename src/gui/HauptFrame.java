@@ -16,30 +16,31 @@ import model.*;
 public class HauptFrame extends JFrame implements HauptFrame_interface {
 
 	/* --------- Variablen ------------ */
-	private final Simulation controller;
+	private Simulation controller;
 	private JMenuItem startEntry;
 	private JPanel hauptpane;
-	private JLabel[][] feld;
-	private textFenster textFenster;
+	JLabel[][] feld;
+	textFenster textFenster;
 	private JToggleButton pauseButton;
 	private boolean paused = false;
-	private static HauptFrame myMainWindow;
-	private int[] RobotPosX;
-	private int[] RobotPosY;
+	static HauptFrame myMainWindow;
+	int[] RobotPosX;
+	int[] RobotPosY;
 	private int fields;
+	// Festlegen der max Fenstergrï¿½ï¿½e
+	private Dimension screen = new Dimension((int) ((Toolkit
+			.getDefaultToolkit().getScreenSize().width) * 0.75),
+			(int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * 0.75));
 
-    public HauptFrame(Simulation controller) {
+	public HauptFrame(Simulation controller) {
 		this.controller = controller;
 		myMainWindow = this;
 
 		setTitle("Warehouse 13.37");
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(200, 200);
 		setMinimumSize(new Dimension(400, 400));
-        Dimension screen = new Dimension((int) ((Toolkit
-                .getDefaultToolkit().getScreenSize().width) * 0.75),
-                (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * 0.75));
-        setMaximumSize(screen);
+		setMaximumSize(screen);
 		erzeugeMenus();
 		erzeugeAnzeige();
 		pack();
@@ -55,7 +56,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 		setJMenuBar(menuBar);
 
 		/* Menï¿½ Datei erzeugen */
-		JMenu menuDatei = new JMenu("MenÃ¼");
+		JMenu menuDatei = new JMenu("Menü");
 		menuBar.add(menuDatei);
 
 		/* Ende */
@@ -68,36 +69,36 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 		menuDatei.add(endeEntry);
 	}
 
-	// neu Einlesen der CSV Datei.
-	public void aendereParameter() {
-		JFileChooser fc = new JFileChooser();
-		// Filter damit nur CSV Dateien angezeigt werden
-		fc.setFileFilter(new FileFilter() {
-			@Override
-			public boolean accept(File f) {
-				return f.isDirectory()
-						|| f.getName().toLowerCase().endsWith(".ini");
-			}
+//	// neu Einlesen der CSV Datei.
+//	public void aendereParameter() {
+//		JFileChooser fc = new JFileChooser();
+//		// Filter damit nur CSV Dateien angezeigt werden
+//		fc.setFileFilter(new FileFilter() {
+//			@Override
+//			public boolean accept(File f) {
+//				return f.isDirectory()
+//						|| f.getName().toLowerCase().endsWith(".ini");
+//			}
+//
+//			@Override
+//			public String getDescription() {
+//				return "INI";
+//			}
+//		});
+//
+//		int state = fc.showOpenDialog(null);
+//		// Wenn "ï¿½ffnen" gedrï¿½ckt
+//		if (state == JFileChooser.APPROVE_OPTION) {
+//			File file = fc.getSelectedFile();
+//			controller.readCSV(file.getAbsolutePath());
+//		}
+//		// Wenn "Abbrechen" gedrï¿½ckt
+//		else
+//			System.out.println("Auswahl abgebrochen");
+//
+//	}
 
-			@Override
-			public String getDescription() {
-				return "INI";
-			}
-		});
-
-		int state = fc.showOpenDialog(null);
-		// Wenn "ï¿½ffnen" gedrï¿½ckt
-		if (state == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			controller.readCSV(file.getAbsolutePath());
-		}
-		// Wenn "Abbrechen" gedrï¿½ckt
-		else
-			System.out.println("Auswahl abgebrochen");
-
-	}
-
-	void erzeugeAnzeige() {
+	public void erzeugeAnzeige() {
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		hauptpane = new JPanel();
@@ -164,7 +165,8 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 
 		for (int y = 0; y < fields; y++) {
 			for (int x = 0; x < fields; x++) {
-				feld[x][y] = (new JLabel("[     ]"));
+				feld[x][y] = (new JLabel("", JLabel.CENTER));
+				feld[x][y].setBorder(BorderFactory.createLineBorder(Color.black));
 				if (y == fields - 1 && x < stations) {
 					feld[x][y].setText("");
 					feld[x][y].setIcon(new ImageIcon(getClass().getResource(("/paket_klein.jpg"))));
@@ -177,10 +179,10 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 		textFenster = new textFenster(robots);
 		textFenster.setBounds(myMainWindow.getX() + myMainWindow.getWidth(), myMainWindow.getY(), 100, myMainWindow.getHeight());
 
-	}
+	};
 
-
-    /* Aktualisiert Warenhaus ansicht */
+	
+	/* Aktualisiert Warenhaus ansicht */
 	public void showRobotState(final int robotName, final int xPos, final int yPos,
 			Item[] ladung, final int xZiel, final int yZiel, final Status status) {
 		
@@ -195,7 +197,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 				if (RobotPosY[robotName] != fields-1) {
 					feld[RobotPosX[robotName]][RobotPosY[robotName]].setIcon(null);
 				}
-				feld[RobotPosX[robotName]][RobotPosY[robotName]].setText("[     ]");
+				feld[RobotPosX[robotName]][RobotPosY[robotName]].setText("");
 				feld[RobotPosX[robotName]][RobotPosY[robotName]].setForeground(Color.BLACK);
 
 				
@@ -209,26 +211,26 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 					feld[xPos][yPos].setText("["+robotName+"]");
 				}
 				
-				switch (status) {
-				case IDLE:
-					feld[xPos][yPos].setForeground(Color.GREEN);
-					break;
-				case BUSY:
-					feld[xPos][yPos].setForeground(Color.YELLOW);
-					break;
-				case BOXING:
-					feld[xPos][yPos].setForeground(Color.BLUE);
-					break;
-				case MOVING:
-					feld[xPos][yPos].setForeground(Color.WHITE);
-					break;
-				case LOADING:
-					feld[xPos][yPos].setForeground(Color.RED);
-					break;
-				default:
-					feld[xPos][yPos].setForeground(Color.PINK);
-					break;
-				}
+//				switch (status) {
+//				case IDLE:
+//					feld[xPos][yPos].setForeground(Color.GREEN);
+//					break;
+//				case BUSY:
+//					feld[xPos][yPos].setForeground(Color.YELLOW);
+//					break;
+//				case BOXING:
+//					feld[xPos][yPos].setForeground(Color.BLUE);
+//					break;
+//				case MOVING:
+//					feld[xPos][yPos].setForeground(Color.WHITE);
+//					break;
+//				case LOADING:
+//					feld[xPos][yPos].setForeground(Color.RED);
+//					break;
+//				default:
+//					feld[xPos][yPos].setForeground(Color.PINK);
+//					break;
+//				}
 
 				
 				// Position zum spï¿½teren lï¿½lschen zwischenspeichern
@@ -244,10 +246,10 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 	/* Zeigt Fehlermeldung bei Fehlverhalten */
 	public void abbruch(String fehlermeldung) {
 		textFenster.abbruch(fehlermeldung);
-	}
+	};
 
-    /* Zeigt ï¿½bersicht nach erfolgreichem Abarbeiten der Auftraege */
+	/* Zeigt ï¿½bersicht nach erfolgreichem Abarbeiten der Auftraege */
 	public void beendet(int benoetigteTakte, int summeAuftraege) {
 		textFenster.beendet(benoetigteTakte, summeAuftraege);
-	}
+	};
 }
