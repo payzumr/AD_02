@@ -35,7 +35,7 @@ public interface Warehouse {
      * 
      * Funktion: siehe Ausgabe.
      */
-    public boolean done();
+    public boolean notDone();
 
     //JUnit
     public Field[][] getWarehouseArr();

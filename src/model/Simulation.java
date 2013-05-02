@@ -122,7 +122,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 	 */
 	private void simulation_run(){
 		int takt = 1; //taktz�hler gegen endlosschleife �bernommen
-		while(whouse.done() && takt < 30000 /*exit option optional*/){
+		while(whouse.notDone() && takt < 30000 /*exit option optional*/){
 			if(this.simstatus){//wenn sim true , schlafe
 				try {
 					Thread.sleep(Simulation.refreshtime); //verz�gerung anhand der refreshtime

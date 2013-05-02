@@ -120,7 +120,7 @@ public class WarehouseImpl implements Warehouse {
         return true;
     }
 
-    public boolean done() {
+    public boolean notDone() {
         return !done;
     }
 
