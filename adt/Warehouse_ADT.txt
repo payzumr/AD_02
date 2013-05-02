@@ -1,0 +1,16 @@
+﻿type: Warehouse
+
+import: Field, Map, Item, Integer, BoxingPlant, StorageArea
+
+literals:
+
+operations:
+	• creator: Konstruktor
+	• accessor: done()
+	• producer:
+	• mutator: takeOrder(Map<Item, Integer> order), action()
+
+axioms:
+	• done() = Boolean
+	• takeOrder(Map<Item, Integer> order) = Queue<Map<Item, Integer>> add order
+	• action() = ( done = true ) | ( ( idle = findIdleBPlant ) || bplants.receiveOrder() ) && action()

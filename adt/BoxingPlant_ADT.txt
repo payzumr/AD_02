@@ -1,0 +1,17 @@
+﻿type: BoxingPlant
+
+import: Field, Map, Item, Integer
+
+literals:
+
+operations:
+	• creator: Konstruktor
+	• accessor: id(), isBusy()
+	• producer:
+	• mutator: action(), receiveOrder(Map<Item, Integer> order) 
+
+axioms:
+	• id() = this.id (int)
+	• isBusy() = Boolean
+	• action() = packingTime++ | packingTime-- | BoxingPlant.receiveOrder() | Robot.robot.action()
+	• receiveOrder() = this.order = order && packingTime++ && busy = true

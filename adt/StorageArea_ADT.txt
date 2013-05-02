@@ -1,0 +1,14 @@
+﻿type: StorageArea
+
+import: Item
+
+literals:
+
+operations:
+	• creator: Konstruktor
+	• accessor: item()
+	• producer:
+	• mutator:
+
+axioms:
+	• item() = Item

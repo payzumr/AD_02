@@ -1,0 +1,17 @@
+﻿type: Robot
+
+import: Map, Field, Item, Integer
+
+literals:
+
+operations:
+	• creator: Konstruktor
+	• accessor: id(), isBusy()
+	• producer:
+	• mutator: receiveOrder(Map<Item, Integer> order), action()
+
+axioms:
+	• id() = id (int)
+	• isBusy() = Boolean
+	• receiveOrder(Map<Item, Integer> order) = ( Map<Item, Integer> order = order )
+	• action() = ( busy = true ) && findWay()

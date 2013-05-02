@@ -1,0 +1,19 @@
+﻿type: Field
+
+import: Map, Item, Robot
+
+literals:
+
+operations:
+	• creator: Konstruktor BoxingPlantImpl, Konstruktor StorageAreaImpl
+	• accessor: hasRobots(), robotID(), coordinateX(), coordinateY(), isBoxingPlant()
+	• producer:
+	• mutator: reg(Robot bot), unRegRobot()
+
+axioms:
+	• BoxingPlantImpl, StorageAreaImpl Є Field
+	• hasRobots() = amountOfRobots (int)
+	• robotID() = robotId (int)
+	• coordinateX() = coordinateX (int)
+	• coordinateY() = coordinateY (int)
+	• isBoxingPlant() = true wenn Objekt Є BoxingPlantImpl | false wenn Objekt Є StorageAreaImpl
