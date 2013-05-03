@@ -87,7 +87,7 @@ class Order {
         StringBuilder output = new StringBuilder();
 
         for (Entry<Item, Integer> element : order.entrySet()) {
-            output.append("Item ID: ").append(element.getKey());
+            output.append("Item ID: ").append(element.getKey().id());
             output.append(" Menge: ").append(element.getValue());
         }
 
