@@ -203,7 +203,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 			
 		//�bersicht aktualisieren
 
-		textFenster.refresh(rob.id(),rob.getCurrentPosX(),rob.getCurrentPosY(),xZiel,yZiel, rob.getOrder().keySet().toString());
+		textFenster.refresh(rob.id(),rob.getCurrentPosX(),rob.getCurrentPosY(),xZiel,yZiel, String.valueOf(rob.getOrder().keySet().size()));
 		for (Item elem : item) {
 			feld[elem.productPosX()][elem.productPosY()].setText(String.valueOf(elem.id()));
 		}
