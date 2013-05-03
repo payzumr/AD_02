@@ -203,7 +203,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
     public void showRobotState( final Warehouse whouse, final Robot rob, final Set<Item> item, 
             final int loadTime, final int xZiel, final int yZiel, final int packingTime ) {
         String output = new String();
-        output = "OrderId:      Menge\n";
+        output = "OrderId:       Gewicht       Menge\n";
         //�bersicht aktualisieren
 
         if (!whouse.getOrderQueue().isEmpty()) {
@@ -211,7 +211,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
             for ( Map<Item, Integer> map : whouse.getOrderQueue()  ) {
                 for (Entry<Item, Integer> entry : map.entrySet()) {
                     //System.out.println(entry.getKey().id() + "#####"+ entry.getValue().toString());
-                    output += entry.getKey().id() + "        " + entry.getValue().toString() + "\n";
+                    output += entry.getKey().id() + "                     " + entry.getKey().size() + "           "  + entry.getValue().toString() + "\n";
                 }
             }
         }
