@@ -21,8 +21,8 @@ public class textFenster extends JFrame implements textFenster_interface  {
     JPanel hauptpane;
     JPanel gridPane;
     JPanel StatusPane;
-    JTable table;
-    JScrollPane scrollPane;
+    //JTable table;
+    //JScrollPane scrollPane;
     JPanel ueberschriftPane;
     JTextArea pendingOrders;
 
@@ -51,6 +51,8 @@ public class textFenster extends JFrame implements textFenster_interface  {
         gridPane.setLayout(new GridLayout(robots, 6));
         hauptpane.add(gridPane, BorderLayout.CENTER);
 
+        StatusPane = new JPanel();
+
         ueberschriftPane.add(new JLabel("Robot:"));
         ueberschriftPane.add(new JLabel("Position:"));
         ueberschriftPane.add(new JLabel("Ziel"));
@@ -76,16 +78,13 @@ public class textFenster extends JFrame implements textFenster_interface  {
             gridPane.add(zeile[y][5]);	
 
             }
-        table = new JTable(4,4);
-        scrollPane = new JScrollPane(table);
-        StatusPane = new JPanel();
-        pendingOrders = new JTextArea("String",10,100);
-        StatusPane.setLayout(new FlowLayout());
+        pendingOrders = new JTextArea("String",10,26);
+        pendingOrders.setForeground(Color.BLUE);
         StatusPane.add(pendingOrders);
+        StatusPane.setLayout(new FlowLayout());
         hauptpane.add(StatusPane, BorderLayout.PAGE_END );
-        hauptpane.add(scrollPane, BorderLayout.SOUTH);
-        pendingOrders.setSize(100, 100);
-        pack();
+        //hauptpane.add(scrollPane, BorderLayout.SOUTH);
+        //pack();
         setVisible(true);
 
         }
@@ -100,14 +99,13 @@ public class textFenster extends JFrame implements textFenster_interface  {
          * 												[3] Ladung
          * 
          */
-        public void refresh(int robot,int xPos,int yPos, int xZiel,int yZiel, String orderId, String gewicht, String menge){
+        public void refresh(int robot,int xPos,int yPos, int xZiel,int yZiel, String orderId, String gewicht, String menge, String status){
             zeile[robot][1].setText("X:"+xPos + " Y:" + yPos);		// Position aktualisieren
             zeile[robot][2].setText("X:"+xZiel + " Y:" + yZiel);	// Ziel aktualisieren
             zeile[robot][3].setText(orderId);
             zeile[robot][4].setText(gewicht);
             zeile[robot][5].setText(menge);
-
-
+            pendingOrders.setText(status);
 
             //		if (ladung == null) {		
             //			zeile[robot][3].setText("tba");						// ToDo! Noch gibts immer nur null �bergeben....

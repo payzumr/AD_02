@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
@@ -192,16 +193,29 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
         pack();
         textFenster = new textFenster(robots);
         textFenster.setBounds(myMainWindow.getX() + myMainWindow.getWidth(), myMainWindow.getY(), 100, myMainWindow.getHeight());
-        
+
     };
 
 
     /* Aktualisiert Warenhaus ansicht */
     //  public void showRobotState(final int robotName, final int xPos, final int yPos,
     //  Item[] ladung, final int xZiel, final int yZiel, final Status status, final Set<Item> item, final int loadTime) {
-    public void showRobotState( final Warehouse whouse, final Robot rob, final Set<Item> item, final int loadTime, final int xZiel, final int yZiel, final int packingTime ) {
-
+    public void showRobotState( final Warehouse whouse, final Robot rob, final Set<Item> item, 
+            final int loadTime, final int xZiel, final int yZiel, final int packingTime ) {
+        String output = new String();
+        output = "OrderId:      Menge\n";
         //�bersicht aktualisieren
+
+        if (!whouse.getOrderQueue().isEmpty()) {
+            //System.out.println("-----------------------Auftraege-------------------");
+            for ( Map<Item, Integer> map : whouse.getOrderQueue()  ) {
+                for (Entry<Item, Integer> entry : map.entrySet()) {
+                    //System.out.println(entry.getKey().id() + "#####"+ entry.getValue().toString());
+                    output += entry.getKey().id() + "        " + entry.getValue().toString() + "\n";
+                }
+            }
+        }
+        //System.out.println("-----------------------End Auftraege-------------------");
         if (!rob.getOrder().keySet().isEmpty()) {
 
             Item realitem = (rob.getOrder().keySet()).iterator().next();
@@ -209,13 +223,13 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
             int gewicht = realitem.size();
             textFenster.refresh(rob.id(), rob.getCurrentPosX(),
                     rob.getCurrentPosY(), xZiel, yZiel,
-                    String.valueOf(realitem.id()), String.valueOf(gewicht),String.valueOf(menge));
+                    String.valueOf(realitem.id()), String.valueOf(gewicht),String.valueOf(menge), output);
         } 
         else
         {
             textFenster.refresh(rob.id(), rob.getCurrentPosX(),
                     rob.getCurrentPosY(), xZiel, yZiel,
-                    "na","na","na");
+                    "na","na","na",  output);
 
         }
         for (Item elem : item) {

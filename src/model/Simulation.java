@@ -96,7 +96,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 													// befuellen
 
 			// i Order mit Item Liste generieren lassen und an das Warehouse uebergeben
-			for (int i = 0; i < 5 ; i++) {	//pauschale erz�ugung ungenau			
+			for (int i = 0; i < 22 ; i++) {	//pauschale erz�ugung ungenau			
 				// Liste mit den Items wird �bergeben...
 			//do{//while(!rcsv.readOrder(item).isEmpty()){
 				whouse.takeOrder(rcsv.readOrder(items));
