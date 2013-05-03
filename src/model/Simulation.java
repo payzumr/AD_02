@@ -189,7 +189,8 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 	        		dx = rob.getStartPosX(); 
 	        		dy = rob.getStartPosY(); 
 	        	 }
-	        	 gui.showRobotState(rob, itemSet, loadTime, dx,dy, packingTime);   	 
+	        	 gui.showRobotState(rob, itemSet, loadTime, dx,dy, packingTime );   	
+	        	 
 	        	 //gui.showRobotState(id, curentx, curenty, null, dx, dy, rob.getStatus(), itemSet, loadTime);
 	         	}
 	     }
