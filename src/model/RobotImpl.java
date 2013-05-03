@@ -318,7 +318,7 @@ public class RobotImpl implements Robot {
     }
     
     public String getOrderInfos(){
-    	System.out.println(order.toString());
+    	//System.out.println(order.toString());
     	return order.toString();
     }
 

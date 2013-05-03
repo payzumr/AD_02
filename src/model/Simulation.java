@@ -50,8 +50,8 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
     private Warehouse whouse; // internes Handle f�r das Warenhaus
     private boolean simstatus; // interne anzeige f�r den Simulations (takte &sim) //true bei sim run
     private HauptFrame_interface gui;
-    List<Item> item;
-    Set<Item> itemSet;
+    List<Item> items;
+    Set<Item> itemSet;  //damit die items die in Keiner bestellung vorkommen nicht angezeigt werden  
     
     
 	/**
@@ -90,16 +90,16 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 			//rcsv.writeItems();
 			
 			// CSV datei mit den Items wird hier eingelesen 
-			this.item = rcsv.readItems();
+			this.items = rcsv.readItems();
 
-			whouse = new WarehouseImpl(item); // Warehouse mit Item Liste
+			whouse = new WarehouseImpl(items); // Warehouse mit Item Liste
 													// befuellen
 
 			// i Order mit Item Liste generieren lassen und an das Warehouse uebergeben
-			for (int i = 0; i < 60 ; i++) {	//pauschale erz�ugung ungenau			
+			for (int i = 0; i < 5 ; i++) {	//pauschale erz�ugung ungenau			
 				// Liste mit den Items wird �bergeben...
 			//do{//while(!rcsv.readOrder(item).isEmpty()){
-				whouse.takeOrder(rcsv.readOrder(item));
+				whouse.takeOrder(rcsv.readOrder(items));
 				
 			}//while(!rcsv.readOrder(item).isEmpty());
 			itemSet = rcsv.getItemSet();
@@ -189,7 +189,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 	        		dx = rob.getStartPosX(); 
 	        		dy = rob.getStartPosY(); 
 	        	 }
-	        	 gui.showRobotState(rob, itemSet, loadTime, dx,dy, packingTime );   	
+	        	 gui.showRobotState(whouse, rob, itemSet, loadTime, dx,dy, packingTime );   	
 	        	 
 	        	 //gui.showRobotState(id, curentx, curenty, null, dx, dy, rob.getStatus(), itemSet, loadTime);
 	         	}

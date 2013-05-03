@@ -20,7 +20,11 @@ public class textFenster extends JFrame implements textFenster_interface  {
     JLabel[][] zeile;
     JPanel hauptpane;
     JPanel gridPane;
+    JPanel StatusPane;
+    JTable table;
+    JScrollPane scrollPane;
     JPanel ueberschriftPane;
+    JTextArea pendingOrders;
 
     private Dimension screen = new Dimension((int) ((Toolkit
                     .getDefaultToolkit().getScreenSize().width) * 0.75),
@@ -72,7 +76,15 @@ public class textFenster extends JFrame implements textFenster_interface  {
             gridPane.add(zeile[y][5]);	
 
             }
-
+        table = new JTable(4,4);
+        scrollPane = new JScrollPane(table);
+        StatusPane = new JPanel();
+        pendingOrders = new JTextArea("String",10,100);
+        StatusPane.setLayout(new FlowLayout());
+        StatusPane.add(pendingOrders);
+        hauptpane.add(StatusPane, BorderLayout.PAGE_END );
+        hauptpane.add(scrollPane, BorderLayout.SOUTH);
+        pendingOrders.setSize(100, 100);
         pack();
         setVisible(true);
 

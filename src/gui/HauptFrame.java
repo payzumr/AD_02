@@ -192,14 +192,14 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
         pack();
         textFenster = new textFenster(robots);
         textFenster.setBounds(myMainWindow.getX() + myMainWindow.getWidth(), myMainWindow.getY(), 100, myMainWindow.getHeight());
-
+        
     };
 
 
     /* Aktualisiert Warenhaus ansicht */
     //  public void showRobotState(final int robotName, final int xPos, final int yPos,
     //  Item[] ladung, final int xZiel, final int yZiel, final Status status, final Set<Item> item, final int loadTime) {
-    public void showRobotState(final Robot rob, final Set<Item> item, final int loadTime, final int xZiel, final int yZiel, final int packingTime ) {
+    public void showRobotState( final Warehouse whouse, final Robot rob, final Set<Item> item, final int loadTime, final int xZiel, final int yZiel, final int packingTime ) {
 
         //�bersicht aktualisieren
         if (!rob.getOrder().keySet().isEmpty()) {
