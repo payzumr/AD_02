@@ -81,9 +81,10 @@ public class textFenster extends JFrame implements textFenster_interface  {
 	 * 												[3] Ladung
 	 * 
 	 */
-	public void refresh(int robot,int xPos,int yPos, int xZiel,int yZiel){
+	public void refresh(int robot,int xPos,int yPos, int xZiel,int yZiel, String order){
 		zeile[robot][1].setText("X:"+xPos + " Y:" + yPos);		// Position aktualisieren
 		zeile[robot][2].setText("X:"+xZiel + " Y:" + yZiel);	// Ziel aktualisieren
+        zeile[robot][3].setText( order);
 //		if (ladung == null) {		
 //			zeile[robot][3].setText("tba");						// ToDo! Noch gibts immer nur null übergeben....
 //		}

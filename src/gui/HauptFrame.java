@@ -63,7 +63,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 		setJMenuBar(menuBar);
 
 		/* Menï¿½ Datei erzeugen */
-		JMenu menuDatei = new JMenu("Menü");
+		JMenu menuDatei = new JMenu("Menï¿½");
 		menuBar.add(menuDatei);
 
 		/* Ende */
@@ -198,12 +198,12 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 	
 	/* Aktualisiert Warenhaus ansicht */
 //	public void showRobotState(final int robotName, final int xPos, final int yPos,
-//			Item[] ladung, final int xZiel, final int yZiel, final Status status, final Set<Item> item, final int loadTime) {
+//	Item[] ladung, final int xZiel, final int yZiel, final Status status, final Set<Item> item, final int loadTime) {
 	public void showRobotState(final Robot rob, final Set<Item> item, final int loadTime, final int xZiel, final int yZiel, final int packingTime) {
 			
 		//ï¿½bersicht aktualisieren
-		
-		textFenster.refresh(rob.id(),rob.getCurrentPosX(),rob.getCurrentPosY(),xZiel,yZiel);
+
+		textFenster.refresh(rob.id(),rob.getCurrentPosX(),rob.getCurrentPosY(),xZiel,yZiel, rob.getOrder().keySet().toString());
 		for (Item elem : item) {
 			feld[elem.productPosX()][elem.productPosY()].setText(String.valueOf(elem.id()));
 		}
