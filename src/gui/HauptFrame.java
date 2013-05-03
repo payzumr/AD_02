@@ -7,11 +7,18 @@ import javax.swing.*;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.IconUIResource;
 
 import model.*;
+import model.Robot;
 
 public class HauptFrame extends JFrame implements HauptFrame_interface {
 
@@ -152,8 +159,9 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 	}
 
 	/* Erstellt Ansicht f�r neues Lager */
-	public void newWarehouse(int fields, int stations, int robots) {
+	public void newWarehouse(int fields, int stations, int robots, Set<Item> item) {
 		this.fields = fields;
+
 		
 		RobotPosX = new int[robots+1];
 		RobotPosY = new int[robots+1];
@@ -169,12 +177,18 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 				feld[x][y].setBorder(BorderFactory.createLineBorder(Color.black));
 				if (y == fields - 1 && x < stations) {
 					feld[x][y].setText("");
+					feld[x][y].setBorder(BorderFactory.createLineBorder(Color.orange, 3));
 					feld[x][y].setIcon(new ImageIcon(getClass().getResource(("/paket_klein.jpg"))));
 				}
 				gridPane.add(feld[x][y]);
 			}
 
 		}
+		
+		for (Item elem : item) {
+			feld[elem.productPosX()][elem.productPosY()].setText(String.valueOf(elem.id()));
+		}
+		
 		pack();
 		textFenster = new textFenster(robots);
 		textFenster.setBounds(myMainWindow.getX() + myMainWindow.getWidth(), myMainWindow.getY(), 100, myMainWindow.getHeight());
@@ -183,59 +197,67 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 
 	
 	/* Aktualisiert Warenhaus ansicht */
-	public void showRobotState(final int robotName, final int xPos, final int yPos,
-			Item[] ladung, final int xZiel, final int yZiel, final Status status) {
-		
+//	public void showRobotState(final int robotName, final int xPos, final int yPos,
+//			Item[] ladung, final int xZiel, final int yZiel, final Status status, final Set<Item> item, final int loadTime) {
+	public void showRobotState(final Robot rob, final Set<Item> item, final int loadTime, final int xZiel, final int yZiel, final int packingTime) {
+			
 		//�bersicht aktualisieren
-		textFenster.refresh(robotName,xPos,yPos,xZiel,yZiel,ladung);
-
+		
+		textFenster.refresh(rob.id(),rob.getCurrentPosX(),rob.getCurrentPosY(),xZiel,yZiel);
+		for (Item elem : item) {
+			feld[elem.productPosX()][elem.productPosY()].setText(String.valueOf(elem.id()));
+		}
 		// Anzeige aktualisieren
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				
+
 				// Alte Position l�schen
-				if (RobotPosY[robotName] != fields-1) {
-					feld[RobotPosX[robotName]][RobotPosY[robotName]].setIcon(null);
+				if (RobotPosY[rob.id()] != fields-1) {
+					feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setIcon(null);
 				}
-				feld[RobotPosX[robotName]][RobotPosY[robotName]].setText("");
-				feld[RobotPosX[robotName]][RobotPosY[robotName]].setForeground(Color.BLACK);
+				feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setText("");
+				feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setForeground(Color.BLACK);
 
 				
 				// Ziel? --> verpacken Bildchen
-				if (xPos == xZiel && yPos == yZiel && yZiel != fields-1) {
-					feld[RobotPosX[robotName]][RobotPosY[robotName]].setText("");
-					feld[xPos][yPos].setIcon(new ImageIcon(getClass().getResource("/einkaufswagen_klein.jpg")));
-					
+				if (rob.getCurrentPosX() == xZiel && rob.getCurrentPosY() == yZiel && yZiel != fields-1) {
+					feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setText("");
+					feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setText("R" + rob.id() + ":" + loadTime );
+				}else if(rob.getCurrentPosX() == rob.getStartPosX() && rob.getCurrentPosY() == rob.getStartPosY() )
+				{
+					feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setText("");
+					feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setText("R" + rob.id() + ":" + packingTime );
 				}else{
 					// Neue Position eintragen
-					feld[xPos][yPos].setText("["+robotName+"]");
+					feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setText("R" + rob.id());
 				}
 				
-//				switch (status) {
-//				case IDLE:
-//					feld[xPos][yPos].setForeground(Color.GREEN);
-//					break;
-//				case BUSY:
-//					feld[xPos][yPos].setForeground(Color.YELLOW);
-//					break;
-//				case BOXING:
-//					feld[xPos][yPos].setForeground(Color.BLUE);
-//					break;
-//				case MOVING:
-//					feld[xPos][yPos].setForeground(Color.WHITE);
-//					break;
-//				case LOADING:
-//					feld[xPos][yPos].setForeground(Color.RED);
-//					break;
-//				default:
-//					feld[xPos][yPos].setForeground(Color.PINK);
-//					break;
-//				}
+				switch (rob.getStatus()) {
+				case IDLE:
+					feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.GREEN);
+					break;
+				case BUSY:
+					feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.YELLOW);
+					break;
+				case BOXING:
+					feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.BLUE);
+					break;
+				case MOVING:
+					feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.WHITE);
+					break;
+				case LOADING:
+					feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.RED);
+					break;
+				default:
+					feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.PINK);
+					break;
+				}
 
 				
 				// Position zum sp�teren l�lschen zwischenspeichern
-				RobotPosX[robotName] = xPos;
-				RobotPosY[robotName] = yPos;				
+				RobotPosX[rob.id()] = rob.getCurrentPosX();
+				RobotPosY[rob.id()] = rob.getCurrentPosY();				
 				
 			}
 		});

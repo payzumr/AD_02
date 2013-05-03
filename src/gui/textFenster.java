@@ -1,5 +1,5 @@
 /* 
- * Klasse zum Erzeugen der Robot Ãœbersicht
+ * Klasse zum Erzeugen der Robot Übersicht
  */
 
 package gui;
@@ -16,22 +16,24 @@ import model.*;
 
 public class textFenster extends JFrame implements textFenster_interface  {
 
-    private final JLabel[][] zeile;
-	private final JPanel hauptpane;
-	private final JPanel gridPane;
-	private final JPanel ueberschriftPane;
+	int robots;
+	JLabel[][] zeile;
+	JPanel hauptpane;
+	JPanel gridPane;
+	JPanel ueberschriftPane;
 
-    public textFenster(int robots) {
-        int robots1 = robots;
+	private Dimension screen = new Dimension((int) ((Toolkit
+			.getDefaultToolkit().getScreenSize().width) * 0.75),
+			(int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * 0.75));
+
+	public textFenster(int robots) {
+		this.robots = robots;
 		
 		setTitle("Robot Uebersicht");
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(700, 200);
 		setMinimumSize(new Dimension(300, 300));
-        Dimension screen = new Dimension((int) ((Toolkit
-                .getDefaultToolkit().getScreenSize().width) * 0.75),
-                (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * 0.75));
-        setMaximumSize(screen);
+		setMaximumSize(screen);
 
 		hauptpane = new JPanel();
 		getContentPane().add(hauptpane);
@@ -79,12 +81,12 @@ public class textFenster extends JFrame implements textFenster_interface  {
 	 * 												[3] Ladung
 	 * 
 	 */
-	public void refresh(int robot,int xPos,int yPos, int xZiel,int yZiel, Item[] ladung){
+	public void refresh(int robot,int xPos,int yPos, int xZiel,int yZiel){
 		zeile[robot][1].setText("X:"+xPos + " Y:" + yPos);		// Position aktualisieren
 		zeile[robot][2].setText("X:"+xZiel + " Y:" + yZiel);	// Ziel aktualisieren
-		if (ladung == null) {		
-			zeile[robot][3].setText("tba");						// ToDo! Noch gibts immer nur null Ã¼bergeben....
-		}
+//		if (ladung == null) {		
+//			zeile[robot][3].setText("tba");						// ToDo! Noch gibts immer nur null übergeben....
+//		}
 		
 		
 	}

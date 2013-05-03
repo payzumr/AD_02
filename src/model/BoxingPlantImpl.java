@@ -6,19 +6,19 @@ import java.util.Map.Entry;
 
 public class BoxingPlantImpl implements BoxingPlant {
     private int amountOfRobots;
-    private final int coordinateX;
-    private final int coordinateY;
+    private int coordinateX;
+    private int coordinateY;
     private final int ID;
     private int robotId;
-    private final Robot robot;
+    private Robot robot;
     private Map<Item, Integer> order;
     private boolean busy;
     private int packingTime;
     private final int temp_PPTIME = (Simulation.TEST) ? JUnitTestframe.PPTIME : Simulation.PPTIME;
     private final int temp_CLTIME = (Simulation.TEST) ? JUnitTestframe.CLTIME : Simulation.CLTIME;
     private int temp_CLTIME_cnt = temp_CLTIME;
-    private final DecimalFormat df = new DecimalFormat("00");
-    private final Status status;
+    private DecimalFormat df = new DecimalFormat("00");
+    private Status status;
 
     public BoxingPlantImpl(int id, int x, int y, Robot bot) {
         robot = bot;
@@ -132,5 +132,13 @@ public class BoxingPlantImpl implements BoxingPlant {
         return status;
     }
     
+    public int getTemp_CLTIME_cnt()
+    {
+    	return this.temp_CLTIME_cnt;
+    }
     
+    public int getPackingTime()
+    {
+    	return this.packingTime;
+    }
 }

@@ -49,4 +49,6 @@ public interface BoxingPlant extends Field {
     public Status getStatus();
     public int coordinateX();
     public int coordinateY();
+    public int getTemp_CLTIME_cnt();
+    public int getPackingTime();
 }
