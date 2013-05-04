@@ -13,7 +13,7 @@ public interface Warehouse {
      * Funktion: Die Bestellung wird an das Objekt Warehouse
      *           uebergeben.
      */
-    public void takeOrder(Map<Item, Integer> order);
+    public void takeOrder(Order order);
 
     /*
      * Eingabe:  keine Eingabe
@@ -39,6 +39,6 @@ public interface Warehouse {
 
     //JUnit
     public Field[][] getWarehouseArr();
-    public Queue<Map<Item, Integer>> getOrderQueue();
+    public Queue<Order> getOrderQueue();
     public BoxingPlant[] getBplants();
 }

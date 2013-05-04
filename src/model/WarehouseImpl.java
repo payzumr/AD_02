@@ -5,7 +5,7 @@ import java.util.*;
 
 public class WarehouseImpl implements Warehouse {
     private Field[][] warehouse;
-    private Queue<Map<Item, Integer>> orderQueue;
+    private Queue<Order> orderQueue;
     private BoxingPlant[] bplants;
     private boolean done;
     private final DecimalFormat df = new DecimalFormat("00");
@@ -86,7 +86,7 @@ public class WarehouseImpl implements Warehouse {
         }
     }
 
-    public void takeOrder(Map<Item, Integer> order) {
+    public void takeOrder(Order order) {
         orderQueue.add(order);
         done = false;
     }
@@ -233,7 +233,7 @@ public class WarehouseImpl implements Warehouse {
     }
 
     @Override
-    public Queue<Map<Item, Integer>> getOrderQueue() {
+    public Queue<Order> getOrderQueue() {
         return this.orderQueue;
     }
 
@@ -241,5 +241,7 @@ public class WarehouseImpl implements Warehouse {
     public BoxingPlant[] getBplants() {
         return this.bplants;
     }
-    
+
+
+
 }

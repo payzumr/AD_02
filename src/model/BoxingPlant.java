@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.List;
 import java.util.Map;
 
 public interface BoxingPlant extends Field {
@@ -28,7 +29,7 @@ public interface BoxingPlant extends Field {
      *           setzt sie auf busy und berechnet die gesamte Packzeit 
      *           abhängig von der Anzahl an Items
      */
-    public void receiveOrder(Map<Item, Integer> order);
+    public void receiveOrder(Order order);
 
     /*
      * Funktion:  prueft, ob die eine Bestellung vorhanden ist 

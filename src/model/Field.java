@@ -67,10 +67,4 @@ public interface Field {
      * Funktion: Gibt als Boolean zurueck, ob das aktuelle Field ein BoxingPlant ist oder nicht.
      */
     public boolean isBoxingPlant();
-
-    /*
-     * Ausgabe: Gibt das Zielfeld des Robots der darauf steht zurueck
-     * 
-     */
-    public int[] getTarget();
 }

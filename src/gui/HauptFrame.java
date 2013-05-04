@@ -208,18 +208,18 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 
         if (!whouse.getOrderQueue().isEmpty()) {
             //System.out.println("-----------------------Auftraege-------------------");
-            for ( Map<Item, Integer> map : whouse.getOrderQueue()  ) {
-                for (Entry<Item, Integer> entry : map.entrySet()) {
+            for ( Order map : whouse.getOrderQueue()  ) {
+                for (Entry<Item, Integer> entry : map.getMap().entrySet()) {
                     //System.out.println(entry.getKey().id() + "#####"+ entry.getValue().toString());
                     output += entry.getKey().id() + "                     " + entry.getKey().size() + "           "  + entry.getValue().toString() + "\n";
                 }
             }
         }
         //System.out.println("-----------------------End Auftraege-------------------");
-        if (!rob.getOrder().keySet().isEmpty()) {
+        if (!rob.getOrder().getMap().keySet().isEmpty()) {
 
-            Item realitem = (rob.getOrder().keySet()).iterator().next();
-            int menge   = rob.getOrder().values().iterator().next();
+            Item realitem = (rob.getOrder().getMap().keySet()).iterator().next();
+            int menge   = rob.getOrder().getMap().values().iterator().next();
             int gewicht = realitem.size();
             textFenster.refresh(rob.id(), rob.getCurrentPosX(),
                     rob.getCurrentPosY(), xZiel, yZiel,
