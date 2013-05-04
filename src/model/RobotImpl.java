@@ -8,18 +8,16 @@ public class RobotImpl implements Robot {
     private final int id;
     private final int startPosX;
     private final int startPosY;
-    private int lastPosX;
-    private int lastPosY;
     private int currentPosX;
     private int currentPosY;
     private boolean busy;
     private final Status status;
     private final Field[][] field;
+    private int blockCounter = 0;
     
     private int[] target;
     
     private Map<Item, Integer> order;
-    private final Random random = new Random();
     private final DecimalFormat df = new DecimalFormat("00");
 
     public RobotImpl(int id, int startPosX, int startPosY, Field[][] field) {
@@ -41,58 +39,48 @@ public class RobotImpl implements Robot {
      * Bewegt den Robot zum naechsten Ziel und wenn die Order leer ist zu seiner BoxingPlant zurueck.
      */
     public void action() {
+        char direction = 0;
 
         // Wenn die Order nicht leer ist, wird das naechste Feld gesucht
         if (order != null && !order.isEmpty()) {
-
             busy = true;
-
             // Speichert in target das naechste Feld
             this.target = destination();
+            
+        } else {
+            // Wenn die Order leer ist, bewegt sich der Robot zurueck zu
+            // seiner BoxingPlant
+            target = new int[2];
+            target[0] = startPosY;
+            target[1] = startPosX; 
+        }
 
-            // Bewegung zum naechsten Feld
-            switch (findWay(this.target[0], this.target[1])) {
-            case 'N':
-                tryMove(-1, 0);
-                fetch();
-                break;
-            case 'S':
-                tryMove(+1, 0);
-                fetch();
-                break;
-            case 'W':
-                tryMove(0, -1);
-                fetch();
-                break;
-            case 'E':
-                tryMove(0, +1);
-                fetch();
-                break;
-            case 'A':
+        direction = findWay(this.target[0], this.target[1]);
+        
+        // Bewegung zum naechsten Feld
+        switch (direction) {
+        case 'N':
+            moveTo(currentPosY - 1, currentPosX);
+            break;
+        case 'S':
+            moveTo(currentPosY + 1, currentPosX);
+            break;
+        case 'W':
+            moveTo(currentPosY, currentPosX - 1);
+            break;
+        case 'E':
+            moveTo(currentPosY, currentPosX + 1);
+            break;
+        case 'A':
+            if(order != null && !order.isEmpty()){
                 load(); // Load Ausgabe auf der Konsole
                 remove(); // Eintrag entfernen, nachdem der Robot angekommen ist
-                break;
-            }
-
-        // Wenn die Order leer ist, bewegt sich der Robot zurueck zu seiner BoxingPlant
-        } else {
-            switch (findWay(startPosY, startPosX)) {
-            case 'N':
-                tryMove(-1, 0);
-                break;
-            case 'S':
-                tryMove(+1, 0);
-                break;
-            case 'W':
-                tryMove(0, -1);
-                break;
-            case 'E':
-                tryMove(0, +1);
-                break;
-            case 'A':
+            }else{
                 busy = false; // Robot ist bei seiner BoxingPlant angekommen
-                break;
             }
+            break;
+        default:
+            break;
         }
     }
 
@@ -122,63 +110,50 @@ public class RobotImpl implements Robot {
 
     /**
      * Findet die Richtung, in die sich der Robot auf dem Weg zum Item bewegt
+     * Der Robot bewegt sich zu erst auf der x Achse wenn möglich danach erst
+     * auf der y Achse in Richtung ziel 
+     * Wenn kein Zug mehr möglich ist pürft er ob die Robots auf den Feld bzw. den Felder auf die er normalerweise ziehen würde 
+     * auf das Feld wollen auf den er steht wenn ja weicht er aus
+     * Wenn der Robot sich zulange nicht bewegen kann weicht er ebenfalls aus 
      * 
-     * @param positionY Y-Ziel-Koordinate des uebergebenen Items
-     * @param positionX X-Ziel-Koordinate des uebergebenen Items
+     * @param positionY
+     *            Y-Ziel-Koordinate des uebergebenen Items
+     * @param positionX
+     *            X-Ziel-Koordinate des uebergebenen Items
      * @return Gefundene Richtung (N, S, W, E) oder A (arrived at item)
      */
     private char findWay(int destinationY, int destinationX) {
-        if (destinationY < currentPosY) {
-            return 'N';
-        } else if (destinationY > currentPosY) {
-            return 'S';
-        } else if (destinationX < currentPosX) {
-            return 'W';
-        } else if (destinationX > currentPosX) {
-            return 'E';
-        } else {
-            return 'A';
-        }
-    }
-
-    /**
-     * Prueft, ob der Robot an die uebergebenen XY-Koordinaten bewegt werden kann.
-     * Wenn der Robot sich in der Zeile ueber den BoxingPlants befindet, wird
-     * zusaetzlich geprueft, ob er sich zu seiner eigenen BoxingPlant nach links
-     * oder rechts bewegen muss.
-     * Ist eine Bewegung nicht moeglich, wird die Ausweichroutine ausgefuehrt.
-     * @param positionY Y-Koordinate fuer die Bewegungsrichtung (-1 Norden / +1 Sueden)
-     * @param positionY Y-Koordinate fuer die Bewegungsrichtung (-1 Westen / +1 Osten)
-     * @return Gibt TRUE zurueck, wenn eine Bewegung moeglich war, sonst FALSE.
-     */
-    private boolean tryMove(int positionY, int positionX) {
-
-        // Prueft, ob das Feld in Richtung der uebergebenen Koordinaten frei ist und bewegt den Robot dorthin
-        if (fieldFree(currentPosY + positionY, currentPosX + positionX)) {
-            moveTo(currentPosY + positionY, currentPosX + positionX);
-            return true;
-
-        // Prueft, ob der Robot sich genau in der Zeile ueber den BoxingPlants befindet und noch im Feld-Array ist
-        } else if (currentPosY + 1 < Simulation.N && field[currentPosY + 1][currentPosX].isBoxingPlant()) {
-
-            // Wenn die BoxingPlant des Robot links ist, bewegt er sich nach links
-            if (id - 1 < currentPosX && fieldFree(currentPosY, currentPosX - 1)) {
-                moveTo(currentPosY, currentPosX - 1);
-                return true;
-
-            // Wenn die Boxing Plant des Robot rechts ist, bewegt er sich nach rechts
-            } else if (id - 1 > currentPosX && fieldFree(currentPosY, currentPosX + 1)) {
-                moveTo(currentPosY, currentPosX + 1);
-                return true;
+        if (destinationX != currentPosX && fieldFree(currentPosY, currentPosX + Integer.compare(destinationX, currentPosX))) {
+            if (destinationX < currentPosX) {
+                return 'W';
+            } else if (destinationX > currentPosX) {
+                return 'E';
             }
+        } else if (destinationY != currentPosY && fieldFree(currentPosY + Integer.compare(destinationY, currentPosY), currentPosX)) {
+            if (destinationY < currentPosY) {
+                return 'N';
+            } else if(destinationY > currentPosY){
+                return 'S';
+            }
+        } else if (destinationY == currentPosY && destinationX == currentPosX) {
+            return 'A';
+        }else if((currentPosY == destinationY 
+                || field[currentPosY + Integer.compare(destinationY, currentPosY)][currentPosX].getTarget()[0] == currentPosY 
+                && field[currentPosY + Integer.compare(destinationY, currentPosY)][currentPosX].getTarget()[1] == currentPosX)
+                && (currentPosX == destinationX 
+                || field[currentPosY][currentPosX + Integer.compare(destinationX, currentPosX)].getTarget()[0] == currentPosY 
+                && field[currentPosY][currentPosX + Integer.compare(destinationX, currentPosX)].getTarget()[1] == currentPosX)){
+            return evade(destinationY, destinationX);
         }
-
-        // Wenn der Robot sich nicht auf die uebergebenen Koordinaten bewegen kann,
-        // fuehrt er eine Ausweichroutine aus
-        evade();
-
-        return false;
+        if (blockCounter >= 5) {
+            blockCounter = 0;
+            return evade(destinationY, destinationX);
+        } else {
+            blockCounter++;
+        }
+        return 0;
     }
+
 
     /**
      * Prueft, ob ein Feld frei ist, oder sich ein Robot darauf befindet
@@ -207,9 +182,6 @@ public class RobotImpl implements Robot {
         // Robot vom aktuellen Feld abmelden
         field[this.currentPosY][this.currentPosX].unReg();
 
-        // Aktuelle Koordianten speichern
-        lastPosY = this.currentPosY;
-        lastPosX = this.currentPosX;
 
         // Uebergebene Koordinaten zuweisen
         this.currentPosY = positionY;
@@ -217,54 +189,46 @@ public class RobotImpl implements Robot {
 
         // Robot auf uebergebenem Feld anmelden
         field[positionY][positionX].reg(this);
-
+        System.out.println("Robot [" + df.format(this.id()) + "]: " + "Gehe zu Position Y: " + df.format(currentPosY) + " X: " + df.format(currentPosX));
         return field[positionY][positionX].hasRobots();
     }
 
-    /**
-     * Generiert eine Random Zahl, die entweder den Wert 1 oder -1 hat
-     * @return Random mit dem zufaelligen Wert 1 oder -1
-     */
-    private int random() {
-        return random.nextBoolean() ? 1 : -1;
-    }
 
     /**
      * Ausweichroutine fuer Robot
      * 
-     * Ist der Weg eines Robot blockiert, weicht dieser dem Hindernis anhand von
-     * zufaelligen Werten fuer random1 und random2 aus.
-     * random1 und random2 stehen mit ihren moeglichen Werten -1 und 1 fuer eine
-     * Bewegung nach links oder rechts, bzw. oben oder unten auf den Field Array.
-     * 
-     * Zuerst wird in X-Richtung geprueft, ob ein Feld links oder rechts frei ist.
-     * Dann wird in Y-Richtung geprueft, ob ein Feld oben oder unten frei ist.
-     * Findet sich kein freies Feld, bleibt der Robot bis zum naechsten Takt auf der aktuellen Position.
+     * Prueft je nachdem in welche Richtung der Robot sich bewegen wuerde, wenn
+     * kein umliegendes Feld blockiert waere, alle umliegende Felder in einer
+     * festen Reihenfolge, wenn kein freies Feld gefunden wurde wird 0
+     * zurueckgegeben 
+     * Reihenfolge x-Achse N,S,W,E  
+     * Reihenfolge y-Achse W,E,N,S
      */
-    private void evade() {
-
-        int random1 = random();
-        int random2 = (random1 == -1) ? 1 : -1;
-
-        // Abhaengig von random1 nach links oder rechts ausweichen
-        if ((currentPosY + currentPosX + random1 - lastPosY - lastPosX != 0) && fieldFree(currentPosY, currentPosX + random1)) {
-            moveTo(currentPosY, currentPosX + random1);
-
-        // Fuehrt random1 nicht zum Erfolg, wird versucht mit random2 in die Gegenrichtung auszuweichen
-        } else if ((currentPosY + currentPosX + random2 - lastPosY - lastPosX != 0) && fieldFree(currentPosY, currentPosX + random2)) {
-            moveTo(currentPosY, currentPosX + random2);
-
-        // Abhaengig von random1 nach unten oder oben ausweichen
-        } else if ((currentPosY + random1 + currentPosX - lastPosY - lastPosX != 0) && fieldFree(currentPosY + random1, currentPosX)) {
-            moveTo(currentPosY + random1, currentPosX);
-
-        // Fuehrt random1 nicht zum Erfolg, wird versucht mit random2 in die Gegenrichtung auszuweichen
-        } else if ((currentPosY + currentPosX + random2 - lastPosY - lastPosX != 0) && fieldFree(currentPosY + random2, currentPosX)) {
-            moveTo(currentPosY + random2, currentPosX);
-
-        // Wenn keine Bewegung moeglich ist, bleibt der Robot bis zum naechsten Takt stehen 
-        } else if (fieldFree(lastPosY, lastPosX)) {
-            moveTo(lastPosY, lastPosX);
+    private char evade(int destinationY, int destinationX) {
+        if (currentPosX != destinationX) {
+            if (fieldFree(currentPosY - 1, currentPosX)) {
+                return 'N';
+            } else if (fieldFree(currentPosY + 1, currentPosX)) {
+                return 'S';
+            } else if (fieldFree(currentPosY, currentPosX - 1)) {
+                return 'W';
+            } else if (fieldFree(currentPosY, currentPosX + 1)) {
+                return 'E';
+            } else {
+                return 0;
+            }
+        } else {
+            if (fieldFree(currentPosY, currentPosX - 1)) {
+                return 'W';
+            } else if (fieldFree(currentPosY, currentPosX + 1)) {
+                return 'E';
+            } else if (fieldFree(currentPosY - 1, currentPosX)) {
+                return 'N';
+            } else if (fieldFree(currentPosY + 1, currentPosX)) {
+                return 'S';
+            } else {
+                return 0;
+            }
         }
     }
 
@@ -274,10 +238,6 @@ public class RobotImpl implements Robot {
      */
     Entry<Item, Integer> remove() {
         return ((TreeMap<Item, Integer>) order).pollFirstEntry();
-    }
-
-    private void fetch() {
-        System.out.println("Robot [" + df.format(this.id()) + "]: " + "Gehe zu Position Y: " + df.format(currentPosY) + " X: " + df.format(currentPosX));
     }
 
     private void load() {
