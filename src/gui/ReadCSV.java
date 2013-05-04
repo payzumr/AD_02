@@ -18,7 +18,7 @@ public class ReadCSV {
 	private int counter = 0;
 
 	// Konstruktor
-	// bekommt als parameter den pfad der ini datei als string ¸bergeben.
+	// bekommt als parameter den pfad der ini datei als string √ºbergeben.
 	public ReadCSV(String inipfad) throws FileNotFoundException, IOException {
 		// liste initialisieren
 		liste = new ArrayList<String>();
@@ -38,7 +38,7 @@ public class ReadCSV {
 
 		orderArr = new ArrayList<String>();
 
-		// Header ¸berspringen
+		// Header √ºberspringen
 		tmpFile.readLine();
 
 		// Zeilen einlesen und in einem liste speichern.
@@ -50,14 +50,14 @@ public class ReadCSV {
 
 	// config.csv laden und die Variablen initialisieren
 	public void readConfig() throws FileNotFoundException, IOException {
-		/* liste inhalt zugehˆrigen variable zuweisen */
+		/* liste inhalt zugeh√∂rigen variable zuweisen */
 		// pfade von config und Delimeter wird gespeichert
 		this.configFile = new File(liste.get(0).split("=")[1].trim());
 		this.delimiter = liste.get(3).split(" ")[2].trim();
 
 		BufferedReader tmpFile = new BufferedReader(new FileReader(configFile));
 
-		// header ¸berspringen
+		// header √ºberspringen
 		tmpFile.readLine();
 
 		// die Zeile mit den einstellungen von der config einlesen und in zeile
@@ -74,7 +74,7 @@ public class ReadCSV {
 		Simulation.PPTIME = Integer.parseInt(zeile.split(delimiter)[3]);
 	}
 
-	// generiert eine Liste mit der vorgegeben lagergrˆﬂe
+	// generiert eine Liste mit der vorgegeben lagergr√∂√üe
 	public void writeItems() throws IOException {
 
 		File outfile = new File(liste.get(4).split("=")[1].trim());
@@ -119,13 +119,13 @@ public class ReadCSV {
 
 		String zeile = null;
 
-		// header ¸berspringen
+		// header √ºberspringen
 		tmpFile.readLine();
 
 		// solange zeile vorhanden...
 		while ((zeile = tmpFile.readLine()) != null) {
 
-			// wenn zeilenl‰nge grˆﬂe als 0
+			// wenn zeilenl√§nge gr√∂√üer als 0
 			if (zeile.length() > 0) {
 
 				String[] arr = zeile.split(delimiter);
@@ -158,10 +158,10 @@ public class ReadCSV {
 		boolean orderComplete = false;
 
 		Item tempItem = null;
-		// den maximal gewicht in einer tmp variable speichern (kapazit‰t)
+		// den maximal gewicht in einer tmp variable speichern (kapazit√§t)
 		int currentMaxSize = Simulation.ORDERMAXSIZE;
-		int countSameItem; // z‰hlt wie oft das selbe item beladen werden muss.
-		int gw = 0; // gewicht wird hier addiert und darf nicht ¸ber kapazit‰t
+		int countSameItem; // z√§hlt wie oft das selbe item beladen werden muss.
+		int gw = 0; // gewicht wird hier addiert und darf nicht √ºber kapazit√§t
 					// sein
 //		String tmp1;
 //		String tmp2;
@@ -221,7 +221,7 @@ public class ReadCSV {
 			}
 		}
 		
-		//Alle relevanten Items dem ItemSet hinzuf¸gen,diese sind sp‰ter auf dem Field sichtbar
+		//Alle relevanten Items dem ItemSet hinzuf√ºgen,diese sind sp√§ter auf dem Field sichtbar
 		for(int i = 0;i<listpairs.size();i=i+2){
 			for(int j = 0;j<listpairs.get(i).size();j++){
 				for(int k = 0;k<item.size();k++){
@@ -245,7 +245,7 @@ public class ReadCSV {
 //			// wenn ich nicht beim item letzten item bin....
 //			if (counter < (orderArr.size())) {
 //
-//				// holt die zeile der orderliste (n‰chstes item)
+//				// holt die zeile der orderliste (n√§chstes item)
 //				zeile = (String) orderArr.get(counter);
 //				// hollt die Item id und die menge in tmp variable
 //				tmpId = Integer.parseInt(zeile.split(";")[0]);
@@ -262,14 +262,14 @@ public class ReadCSV {
 //				
 //				
 //
-//				// Solange das selbe item noch eine menge hat und in kapazit‰t
+//				// Solange das selbe item noch eine menge hat und in kapazit√§t
 //				// noch gewicht passt...
 //				for (int i = 0; i < menge; i++) {
 //
 //					// items durch laufen
 //					for (Item element : item) {
 //
-//						// ¸berpr¸ft item id vom jetzigen mit der von der Item
+//						// √ºberpr√ºft item id vom jetzigen mit der von der Item
 //						// liste
 //						if (element.id() == tmpId) {
 //							// speicher elemet (das item ) in die tmp
@@ -279,7 +279,7 @@ public class ReadCSV {
 //							gw = gw + tempItem.size();
 //							// wie oft wurde das selbe item abgearbeitet.
 //							countSameItem++;
-//							// verl‰sst die schleifen wenn item gefunden
+//							// verl√§sst die schleifen wenn item gefunden
 //							break;
 //						}
 //					}
@@ -287,7 +287,7 @@ public class ReadCSV {
 //					//falls das selbe item nicht mehr rein passt
 //					// dann..
 //					if ((gw + tempItem.size()) > currentMaxSize) {
-//						// entfernt item aus mit der Alten menge und f¸gt das
+//						// entfernt item aus mit der Alten menge und f√ºgt das
 //						// item mit der neuen menge hinzu
 //						orderArr.remove(counter);
 //
@@ -295,7 +295,7 @@ public class ReadCSV {
 //								+ (menge - countSameItem));
 //						retMap.put(tempItem, countSameItem);
 //						if ((menge - countSameItem) == 0) {
-//							// counter z‰hlen um n‰chstes item zu hollen
+//							// counter z√§hlen um n√§chstes item zu hollen
 //							counter++;
 //						}
 //						orderComplete = true;
@@ -313,8 +313,8 @@ public class ReadCSV {
 //					int i = counter + 1;
 //					counter++;
 //
-//					// ‹berpr¸fe ob das n‰chste item noch vom robot zu tragen
-//					// w‰re, ansonsten return die orderMap
+//					// √ºberpr√ºfe ob das n√§chste item noch vom robot zu tragen
+//					// w√§re, ansonsten return die orderMap
 //					if (i < orderArr.size()) {
 //						zeile = (String) orderArr.get(i);
 //						tmpId = Integer.parseInt(zeile.split(";")[0]);

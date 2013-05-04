@@ -97,7 +97,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 			whouse = new WarehouseImpl(items); // Warehouse mit Item Liste
 													// befuellen
 
-			//Order holen , tmp beinhaltet die Auftr‰ge
+			//Order holen , tmp beinhaltet die Auftr√§ge
 			List<Order> tmp = new ArrayList<Order>();
 			tmp = rcsv.readOrder(items);
 			System.out.println("Gesamte Anzahl an gueltigen Auftraegen: " + tmp.size());
