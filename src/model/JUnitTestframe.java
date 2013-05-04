@@ -56,7 +56,7 @@ public class JUnitTestframe {
         JUnitTestframe.CLTIME = 0;
         this.testItemList = Item.factory();
         this.testHouse = new WarehouseImpl(this.testItemList);
-        this.testOrder = new Order();
+        //this.testOrder = new Order();
     }
 
     /**

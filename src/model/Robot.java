@@ -41,14 +41,14 @@ public interface Robot {
      *
      * Funktion: gibt dem Robot eine neue Order
      */
-    public void receiveOrder(Map<Item, Integer> order);
+    public void receiveOrder(Order order);
 
     /**
      * Erg�nzug team2
      * Gibt die Item map des Robots nach au�en um seine Auftr�ge abgreifbar zu machen
      * @return Item MAP
      */
-    public Map<Item, Integer> getOrder();
+    public Order getOrder();
     
     //JUnit
     public int getStartPosX();

@@ -9,9 +9,9 @@ public class BoxingPlantImpl implements BoxingPlant {
     private int coordinateX;
     private int coordinateY;
     private final int ID;
-    private Robot assignedrobot;
-    private Robot robotOnField;
-    private Map<Item, Integer> order;
+    private int robotId;
+    private Robot robot;
+    private Order order;
     private boolean busy;
     private int packingTime;
     private final int temp_PPTIME = (Simulation.TEST) ? JUnitTestframe.PPTIME : Simulation.PPTIME;
@@ -21,7 +21,8 @@ public class BoxingPlantImpl implements BoxingPlant {
     private Status status;
 
     public BoxingPlantImpl(int id, int x, int y, Robot bot) {
-        assignedrobot = bot;
+        robot = bot;
+        robotId = bot.id();
         amountOfRobots = 1;
         busy = false;
         coordinateX = x;
@@ -33,44 +34,45 @@ public class BoxingPlantImpl implements BoxingPlant {
     public void action() {
 
         // Wenn eine bestellung vorliegt und der Robot nicht unterwegs ist
-        if(order != null && !assignedrobot.isBusy()) {
+        if(order != null && !robot.isBusy()) {
             // gib dem Robot bestellung
             // und loesche die Bestellliste
             System.out.println("BoxingPlant [" + df.format(this.id()) + "]: Bekomme Order " + order.toString());
-            assignedrobot.receiveOrder(order);
+            robot.receiveOrder(order);
             order = null;
         }
 
         // Wenn der Roboter unterwegs ist, wird nur eine action 
         // nach Ablauf des Takt counters ausgeloest
-        if(order == null && assignedrobot.isBusy() && temp_CLTIME_cnt-1 != 0) {
+        if(order == null && robot.isBusy() && temp_CLTIME_cnt-1 != 0) {
             temp_CLTIME_cnt--;
         } else {
-            assignedrobot.action();
+            robot.action();
 
             temp_CLTIME_cnt = temp_CLTIME;
         } 
 
         // Wenn keine Bestelliste vorliegt, robot nicht (mehr) unterwegs ist,
         // aber packingTime > 0 ist, muss noch eine Vestellung verpackt werden 
-        if(order == null && !assignedrobot.isBusy() && packingTime != 0) {
+        if(order == null && !robot.isBusy() && packingTime != 0) {
             System.out.println("BoxingPlant [" + df.format(this.id()) + "]: Verpacke Order");
 
             packingTime--;
         } 
 
         // Nach dem Verpacken ist die bplant fertig
-        if(order == null && !assignedrobot.isBusy() && packingTime == 0){
+        if(order == null && !robot.isBusy() && packingTime == 0){
             busy = false;
         }
     }
 
-    public void receiveOrder(Map<Item, Integer> order) {
+    public void receiveOrder(Order order) {
         // Bestellung entgegennehmen
         this.order = order;
-
+        
+      
         // Gesamtgewicht merken
-        for (Entry<Item, Integer> element : order.entrySet()) {
+        for (Entry<Item, Integer> element : order.getMap().entrySet()) {
             packingTime += element.getValue();
         }
 
@@ -105,8 +107,22 @@ public class BoxingPlantImpl implements BoxingPlant {
         return busy;
     }
 
+    public void reg(Robot bot) {
+        amountOfRobots++;
+        this.robotId = bot.id();
+    }
+
+    public void unReg() {
+        amountOfRobots--;
+        this.robotId = 0;
+    }
+
+    public int robotID() {
+        return robotId;
+    }
+
     public Robot getRobot() {
-        return assignedrobot;
+        return robot;
     }
 
     public int getAmountOfRobots() {
@@ -125,31 +141,5 @@ public class BoxingPlantImpl implements BoxingPlant {
     public int getPackingTime()
     {
     	return this.packingTime;
-    }
-    
-    public void reg(Robot bot) {
-        amountOfRobots++;
-        robotOnField = bot;
-    }
-
-    public void unReg() {
-        amountOfRobots--;
-        robotOnField = null;
-    }
-
-    public int robotID() {
-        if(robotOnField == null){
-            return 0;
-        }
-        return robotOnField.id();
-    }
-    
-    public int[] getTarget(){
-        if(robotOnField != null){
-            return robotOnField.getTarget();
-        }else{
-            int i[] = {-1,-1};
-            return i;
-        }
     }
 }

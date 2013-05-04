@@ -2,6 +2,7 @@ package model;
 
 import gui.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
@@ -46,6 +47,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
     public static  int PPTIME = 5; //vermutung irgenwas mit der verpackzeit ????
     public static  int refreshtime = 500  ; // die Zeit bis zum nï¿½chsten schritt in ms 10*1000 = 10 Sekunden
     public static boolean TEST = false; //teststeuerung der vorgruppe
+    
     
     private Warehouse whouse; // internes Handle fï¿½r das Warenhaus
     private boolean simstatus; // interne anzeige fï¿½r den Simulations (takte &sim) //true bei sim run
@@ -95,13 +97,26 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 			whouse = new WarehouseImpl(items); // Warehouse mit Item Liste
 													// befuellen
 
+			//Order holen , tmp beinhaltet die Aufträge
+			List<Order> tmp = new ArrayList<Order>();
+			tmp = rcsv.readOrder(items);
+			System.out.println("Gesamte Anzahl an gueltigen Auftraegen: " + tmp.size());
+			
 			// i Order mit Item Liste generieren lassen und an das Warehouse uebergeben
-			for (int i = 0; i < 22 ; i++) {	//pauschale erzï¿½ugung ungenau			
+			//Schleife geht solange i kleiner Auftragszahl plus 1
+			for (int i = 0; i < tmp.size()+1 ; i++) {	//pauschale erzï¿½ugung ungenau			
 				// Liste mit den Items wird ï¿½bergeben...
 			//do{//while(!rcsv.readOrder(item).isEmpty()){
-				whouse.takeOrder(rcsv.readOrder(items));
+				for(int j = 0;j<tmp.size();j++){
+					whouse.takeOrder(tmp.get(j));
+				}
+				
+				
 				
 			}//while(!rcsv.readOrder(item).isEmpty());
+			
+			
+			
 			itemSet = rcsv.getItemSet();
 		} catch (IOException e) {
 			System.err.println("Fehler bei Initialisierung");
@@ -181,7 +196,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 //	        	 int curentx = rob.getCurrentPosX();
 //	        	 int curenty = rob.getCurrentPosY();
 	        	 int[] dest = rob.getTarget();
-	        	 if (rob.getOrder().isEmpty() !=true){
+	        	 if (rob.getOrder().getMap().isEmpty() !=true){
 	        		 dx = dest[1];
 	        		 dy = dest[0];
 	        	 }
