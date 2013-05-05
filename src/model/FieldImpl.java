@@ -5,6 +5,7 @@ public class FieldImpl implements Field {
     private Robot robot;
     private final int coordinateX;
     private final int coordinateY;
+    private Item item;
     private int id;
 
     /**
@@ -14,6 +15,15 @@ public class FieldImpl implements Field {
      * @param coordinateX
      * @param coordinateY
      */
+    
+    public FieldImpl(Item item) {
+        amountOfRobots = 0;
+
+        coordinateX = item.productPosX();
+        coordinateY = item.productPosY();
+
+        this.item = item;
+    }
     public FieldImpl(int amountOfRobots, int robotId, int coordinateX, int coordinateY) {
         this.amountOfRobots = amountOfRobots;
         // this.robotId = robotId;
@@ -27,13 +37,16 @@ public class FieldImpl implements Field {
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
     }
+    
+
 
     public int hasRobots() {
         return amountOfRobots;
     }
 
     public boolean isBoxingPlant() {
-        return true;
+        if (this.id == 0) return false;
+        else return true;
     }
 
     public void reg(Robot bot) {

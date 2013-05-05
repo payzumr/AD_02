@@ -64,7 +64,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
         setJMenuBar(menuBar);
 
         /* Men� Datei erzeugen */
-        JMenu menuDatei = new JMenu("Men�");
+        JMenu menuDatei = new JMenu("Menue");
         menuBar.add(menuDatei);
 
         /* Ende */
@@ -203,9 +203,11 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
     public void showRobotState( final Warehouse whouse, final Robot rob, final Set<Item> item, 
             final int loadTime, final int xZiel, final int yZiel, final int packingTime ) {
         String output = new String();
-        output = "OrderId       ItemId      Gewicht       Menge\n";
+        output = "OrderId       ItemId      Gewicht       Menge       Robot\n";
         //�bersicht aktualisieren
-
+        for (Item elem : item) {
+            feld[elem.productPosX()][elem.productPosY()].setText(String.valueOf(elem.id()));
+        }
         if (!whouse.getOrder().isEmpty()) {
             //System.out.println("-----------------------Auftraege-------------------");
             for ( Order map : whouse.getOrder()  ) {
@@ -217,7 +219,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
             }
         }
         //System.out.println("-----------------------End Auftraege-------------------");
-        if(rob.getOrder() != null) if (!rob.getOrder().getMap().keySet().isEmpty()) {
+        if((rob.getOrder() != null )&& (!rob.getOrder().getMap().keySet().isEmpty())) {
 
             Item realitem = (rob.getOrder().getMap().keySet()).iterator().next();
             int menge   = rob.getOrder().getMap().values().iterator().next();
@@ -233,17 +235,14 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
                     "na","na","na",  output);
 
         }
-        for (Item elem : item) {
-            feld[elem.productPosX()][elem.productPosY()].setText(String.valueOf(elem.id()));
-        }
+
         // Anzeige aktualisieren
         EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-
                 // Alte Position l�schen
                 if (RobotPosY[rob.id()] != fields-1) {
-                    feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setIcon(null);
+                   feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setIcon(null);
                 }
                 feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setText("");
                 feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setForeground(Color.BLACK);
@@ -282,7 +281,6 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
                 feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.PINK);
                 break;
         }
-
 
         // Position zum sp�teren l�lschen zwischenspeichern
         RobotPosX[rob.id()] = rob.getCurrentPosX();

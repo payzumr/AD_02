@@ -27,7 +27,7 @@ public class WarehouseImpl implements Warehouse {
 
         // Alle vorgesehene Fields mit StorageAreaImpl initialisieren und Items zuweisen
         for(Item i : itemList) {
-            warehouse[i.productPosY()][i.productPosX()] = new StorageAreaImpl(i);
+            warehouse[i.productPosY()][i.productPosX()] = new FieldImpl(i);
         }
 
         // Alle vorgesehene Fields mit BoxingPlantImpl initialisieren und RobotImpl zuweisen
