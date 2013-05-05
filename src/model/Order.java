@@ -9,6 +9,9 @@ public class Order {
     private final String orderId;
     private static int ordercount = 1;
    
+    public boolean isEmpty(){
+        return order.isEmpty();
+    }
 
     // Public Konstruktor zum Anlegen von Testfaellen
     public Order(Map<Item, Integer> order) {

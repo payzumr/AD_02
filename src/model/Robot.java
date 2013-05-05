@@ -4,15 +4,6 @@ import java.util.Map;
 
 public interface Robot {
 
-    /* 
-     * Eingabe:  keine
-     * 
-     * Ausgabe:  keine
-     *   
-     * Funktion: Gibt die ID des Robot zuruck
-     */
-    public int id();
-
     /*
      * Eingabe:  eine Map die Item und Iteger enthalt
      *
@@ -25,15 +16,6 @@ public interface Robot {
      */
     public void action();
 
-    /* 
-     * Eingabe:  keine
-     *
-     * Ausgabe:  keine
-     * 
-     * Funktion: Zum abfragen ob der Robot beschaftigt ist
-     */
-    public boolean isBusy();
-
     /*
      * Eingabe:  eine Map die Item und Iteger enthalt
      *
@@ -44,21 +26,23 @@ public interface Robot {
     public void receiveOrder(Order order);
 
     /**
-     * Erg�nzug team2
-     * Gibt die Item map des Robots nach au�en um seine Auftr�ge abgreifbar zu machen
+     * Ergaenzug team2
+     * Gibt die Item map des Robots nach aussen um seine Auftraege abgreifbar zu machen
      * @return Item MAP
      */
     public Order getOrder();
     
-    //JUnit
+    //getter
     public int getStartPosX();
     public int getStartPosY();
     public int getCurrentPosX();
     public int getCurrentPosY();
     public Status getStatus();
+    public boolean isBusy();
+    public int id();
     
     /**
-     * getter für die momentane Destination des Robots
+     * getter fuer die momentane Destination des Robots
      * @return Zielkoordinaten (gedreht [Y][X])
      */
     public int[] getTarget();

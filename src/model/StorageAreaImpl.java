@@ -5,7 +5,7 @@ public class StorageAreaImpl implements StorageArea {
     private final int coordinateX;
     private final int coordinateY;
     private final Item item;
-    private int robotId;
+    private Robot robot;
 
     public StorageAreaImpl(Item item) {
         amountOfRobots = 0;
@@ -38,22 +38,34 @@ public class StorageAreaImpl implements StorageArea {
 
     @Override
     public String toString() {
-    	System.out.println("toString StorageImpl");
+        System.out.println("toString StorageImpl");
         return "StorageAreaImpl: XY-Koordinaten: " + coordinateX + "/" + coordinateY + " Item ID: " + item;
     }
 
     public void reg(Robot bot) {
         amountOfRobots++;
-        this.robotId = bot.id();
+        robot = bot;
     }
 
     public void unReg() {
         amountOfRobots--;
-        this.robotId = 0;
+        robot = null;
     }
 
     public int robotID() {
-        return robotId;
+        if (robot == null) {
+            return 0;
+        }
+        return robot.id();
+    }
+
+    public int[] getTarget() {
+        if (robot != null) {
+            return robot.getTarget();
+        } else {
+            int i[] = { -1, -1 };
+            return i;
+        }
     }
 
 }
