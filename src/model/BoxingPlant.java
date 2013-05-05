@@ -1,8 +1,5 @@
 package model;
 
-import java.awt.List;
-import java.util.Map;
-
 public interface BoxingPlant extends Field {
 
     /*
@@ -52,4 +49,5 @@ public interface BoxingPlant extends Field {
     public int coordinateY();
     public int getTemp_CLTIME_cnt();
     public int getPackingTime();
+    public int getLoadTime();
 }

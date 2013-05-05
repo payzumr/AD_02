@@ -39,7 +39,7 @@ public class RobotImpl implements Robot {
      * Bewegt den Robot zum naechsten Ziel und wenn die Order leer ist zu seiner
      * BoxingPlant zurueck.
      */
-    public void action() {
+    public char action() {
         char direction = 0;
         if (order != null) {
 
@@ -79,7 +79,9 @@ public class RobotImpl implements Robot {
             default:
                 break;
             }
+            return direction;
         }
+        return 'F';
     }
 
     /**
@@ -316,6 +318,16 @@ public class RobotImpl implements Robot {
     @Override
     public int[] getTarget() {
         return this.target;
+    }
+
+    public int getItemLoadTime() {
+        if(order == null || order.isEmpty()) {
+            return 0;
+        }
+        Entry<Item, Integer> orderEntry = ((TreeMap<Item, Integer>)order.getMap()).firstEntry();
+        Item item = orderEntry.getKey();
+        Integer itemCount = orderEntry.getValue();
+        return item.size() * itemCount;
     }
 
 }

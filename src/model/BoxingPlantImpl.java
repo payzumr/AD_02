@@ -1,7 +1,6 @@
 package model;
 
 import java.text.DecimalFormat;
-import java.util.*;
 import java.util.Map.Entry;
 
 public class BoxingPlantImpl implements BoxingPlant {
@@ -17,6 +16,8 @@ public class BoxingPlantImpl implements BoxingPlant {
     private final int temp_PPTIME =  Simulation.PPTIME;
     private final int temp_CLTIME =  Simulation.CLTIME;
     private int temp_CLTIME_cnt = temp_CLTIME;
+    private int loadtime = 0;
+    private char lastAction;
     private DecimalFormat df = new DecimalFormat("00");
     private Status status;
 
@@ -38,12 +39,21 @@ public class BoxingPlantImpl implements BoxingPlant {
             // und loesche die Bestellliste
             System.out.println("BoxingPlant [" + df.format(this.id()) + "]: Bekomme Order " + order.toString());
             assignedrobot.receiveOrder(order);
+            loadtime = this.getLoadTime();
             order = null;
+        }
+
+        if(lastAction == 'A') {
+            if(order == null && assignedrobot.isBusy() && loadtime > 0) {
+                loadtime--;
+            } else {
+                lastAction = assignedrobot.action();
+            }
         }
 
         // Wenn der Roboter unterwegs ist, wird nur eine action 
         // nach Ablauf des Takt counters ausgeloest
-        if(order == null && assignedrobot.isBusy() && temp_CLTIME_cnt-1 != 0) {
+        if(lastAction != 'A' && order == null && assignedrobot.isBusy() && temp_CLTIME_cnt-1 != 0) {
             temp_CLTIME_cnt--;
         } else {
             assignedrobot.action();
@@ -151,5 +161,9 @@ public class BoxingPlantImpl implements BoxingPlant {
     public int getPackingTime()
     {
     	return this.packingTime;
+    }
+
+    public int getLoadTime() {
+        return assignedrobot.getItemLoadTime() * temp_CLTIME;
     }
 }
