@@ -8,6 +8,7 @@ public class Order {
     private Map<Item, Integer> order;
     private final String orderId;
     private static int ordercount = 1;
+   
 
     // Public Konstruktor zum Anlegen von Testfaellen
     public Order(Map<Item, Integer> order) {
@@ -26,6 +27,7 @@ public class Order {
         return order;
     }
     
+  
     public String getOrderId(){
     	return this.orderId;
     }
@@ -93,7 +95,6 @@ public class Order {
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
-        System.out.println("toString von Order");
         for (Entry<Item, Integer> element : order.entrySet()) {
             output.append("Item ID: ").append(element.getKey().id());
             output.append(" Menge: ").append(element.getValue());

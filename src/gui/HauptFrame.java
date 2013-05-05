@@ -203,20 +203,21 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
     public void showRobotState( final Warehouse whouse, final Robot rob, final Set<Item> item, 
             final int loadTime, final int xZiel, final int yZiel, final int packingTime ) {
         String output = new String();
-        output = "OrderId:       Gewicht       Menge\n";
+        output = "OrderId       ItemId      Gewicht       Menge\n";
         //�bersicht aktualisieren
 
-        if (!whouse.getOrderQueue().isEmpty()) {
+        if (!whouse.getOrder().isEmpty()) {
             //System.out.println("-----------------------Auftraege-------------------");
-            for ( Order map : whouse.getOrderQueue()  ) {
+            for ( Order map : whouse.getOrder()  ) {
                 for (Entry<Item, Integer> entry : map.getMap().entrySet()) {
                     //System.out.println(entry.getKey().id() + "#####"+ entry.getValue().toString());
-                    output += entry.getKey().id() + "                     " + entry.getKey().size() + "           "  + entry.getValue().toString() + "\n";
+                    output += String.format("%8s%16s%16s%16s" , map.getOrderId() , entry.getKey().id() , entry.getKey().size() , entry.getValue().toString());
+                    output += "\n";
                 }
             }
         }
         //System.out.println("-----------------------End Auftraege-------------------");
-        if (!rob.getOrder().getMap().keySet().isEmpty()) {
+        if(rob.getOrder() != null) if (!rob.getOrder().getMap().keySet().isEmpty()) {
 
             Item realitem = (rob.getOrder().getMap().keySet()).iterator().next();
             int menge   = rob.getOrder().getMap().values().iterator().next();

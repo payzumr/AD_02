@@ -43,7 +43,7 @@ public class RobotImpl implements Robot {
     public void action() {
 
         // Wenn die Order nicht leer ist, wird das naechste Feld gesucht
-        if (order.getMap() != null && !order.getMap().isEmpty()) {
+    	if(order != null) if (order.getMap() != null && !order.getMap().isEmpty()) {
 
             busy = true;
 

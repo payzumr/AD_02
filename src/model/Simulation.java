@@ -104,7 +104,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 			
 			// i Order mit Item Liste generieren lassen und an das Warehouse uebergeben
 			//Schleife geht solange i kleiner Auftragszahl plus 1
-			for (int i = 0; i < tmp.size()+1 ; i++) {	//pauschale erz�ugung ungenau			
+			for (int i = 0; i < 1 ; i++) {	//pauschale erz�ugung ungenau			
 				// Liste mit den Items wird �bergeben...
 			//do{//while(!rcsv.readOrder(item).isEmpty()){
 				for(int j = 0;j<tmp.size();j++){
@@ -190,13 +190,13 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 	         if (rob != null){
 	        	 int loadTime = temp[i].getTemp_CLTIME_cnt();
 	        	 int packingTime = temp[i].getPackingTime();
-	        	 int dx;
-	        	 int dy;
+	        	 int dx = 0;
+	        	 int dy = 0;
 //	        	 int id = rob.id();
 //	        	 int curentx = rob.getCurrentPosX();
 //	        	 int curenty = rob.getCurrentPosY();
 	        	 int[] dest = rob.getTarget();
-	        	 if (rob.getOrder().getMap().isEmpty() !=true){
+	        	 if(rob.getOrder() != null) if (rob.getOrder().getMap().isEmpty() !=true){
 	        		 dx = dest[1];
 	        		 dy = dest[0];
 	        	 }

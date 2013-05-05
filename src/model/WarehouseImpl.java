@@ -6,9 +6,11 @@ import java.util.*;
 public class WarehouseImpl implements Warehouse {
     private Field[][] warehouse;
     private Queue<Order> orderQueue;
+    private List<Order> orderCopy = new ArrayList<Order>(); // Liste mit den Orders vom Anfang, dient zur Darstellung im TextFrame
     private BoxingPlant[] bplants;
     private boolean done;
     private final DecimalFormat df = new DecimalFormat("00");
+    boolean firstcall = true;
 
     public WarehouseImpl() {
         new WarehouseImpl(Item.factory());
@@ -60,6 +62,13 @@ public class WarehouseImpl implements Warehouse {
     }
 
     public void action() {
+    	if(firstcall){
+    		firstcall = false;
+    		for(int i = 0;i<orderQueue.size();i++){
+    			orderCopy.add((Order) orderQueue.toArray()[i]);
+    		}
+    	}
+    	
         // Index fuer eine bPlant, die idle ist
         int idle;
 
@@ -235,6 +244,10 @@ public class WarehouseImpl implements Warehouse {
     @Override
     public Queue<Order> getOrderQueue() {
         return this.orderQueue;
+    }
+    
+    public List<Order> getOrder() {
+    	return this.orderCopy;
     }
 
     @Override
