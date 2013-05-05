@@ -2,10 +2,10 @@ package model;
 
 public class FieldImpl implements Field {
     private int amountOfRobots;
-    private int robotId;
+    private Robot robot;
     private final int coordinateX;
     private final int coordinateY;
-    private int id; 
+    private int id;
 
     /**
      * 
@@ -16,7 +16,7 @@ public class FieldImpl implements Field {
      */
     public FieldImpl(int amountOfRobots, int robotId, int coordinateX, int coordinateY) {
         this.amountOfRobots = amountOfRobots;
-        this.robotId = robotId;
+        // this.robotId = robotId;
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
     }
@@ -32,23 +32,34 @@ public class FieldImpl implements Field {
         return amountOfRobots;
     }
 
-
     public boolean isBoxingPlant() {
         return true;
     }
 
     public void reg(Robot bot) {
         amountOfRobots++;
-        this.robotId = bot.id();
+        robot = bot;
     }
 
     public void unReg() {
         amountOfRobots--;
-        this.robotId = 0;
+        robot = null;
     }
 
     public int robotID() {
-        return robotId;
+        if (robot == null) {
+            return 0;
+        }
+        return robot.id();
+    }
+
+    public int[] getTarget() {
+        if (robot != null) {
+            return robot.getTarget();
+        } else {
+            int i[] = { -1, -1 };
+            return i;
+        }
     }
 
     @Override
