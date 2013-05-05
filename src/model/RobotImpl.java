@@ -50,6 +50,7 @@ public class RobotImpl implements Robot {
             // Speichert in target das naechste Feld
             this.target = destination();
 
+            //asd
             direction = findWayAlternative(this.target[0], this.target[1]);
 
             // Bewegung zum naechsten Feld
