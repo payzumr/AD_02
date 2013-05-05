@@ -40,5 +40,6 @@ public interface Warehouse {
     //JUnit
     public Field[][] getWarehouseArr();
     public Queue<Order> getOrderQueue();
+    public List<Order> getOrder();
     public BoxingPlant[] getBplants();
 }
