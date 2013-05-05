@@ -84,113 +84,113 @@ public class JUnitTestframe {
         }
     }
 
-    /**
-     * Erzeugen von Item-Objekten mit bestimmten Eigenschaften (ID, Position & Size) 
-     * und deren Zuweisung an bestimmte StorageAreas ist moeglich.
-     * 
-     * Fuellen der StorageAreas mit Items (durchnummeriert). --> passiert automatisch in der factory!
-     * Testen auf ID, Position und size der einzelnen Item-Objekte.
-     */
-    @Test
-    public void testItems() {
-        // Field[N][N] = [i][i] - start bei i=2, da unterste zeile immer Boxingplants vorbehalten ist,
-        // ORDERMAXSIZE = 1
-        for (int i = 2; i <= maxTestFieldLength; i++) {
-            makeTestHouse(i, 0, 1, 0, 0);
-
-            // ID= 1 bis maxTestFieldLength, poductPos: k=X, j=Y (aufsteigend), 
-            // size des item immer =1, da ORDERMAXSIZE=1 festgelegt wird.
-            int idCnt = 1;
-            for (int j = 0; j < i-1; j++) {
-                for (int k = 0; k < i; k++) {
-                    assertEquals(idCnt, ((StorageArea) testHouse.getWarehouseArr()[j][k]).item().id());
-                    idCnt++;
-
-                    assertEquals(k, ((StorageArea) testHouse.getWarehouseArr()[j][k]).item().productPosX());
-                    assertEquals(j, ((StorageArea) testHouse.getWarehouseArr()[j][k]).item().productPosY());
-
-                    assertEquals(1, ((StorageArea) testHouse.getWarehouseArr()[j][k]).item().size());
-                }
-            }
-        }
-    }
-
-    /**
-     * Das Befüllen des Arrays mit einer bestimmten Anzahl von StorageAreas und BoxingPlants 
-     * die einem bestimmten Muster entsprechen (BoxingPlants werden hinten im Array eingefügt) 
-     * wird sichergestellt.
-     * 
-     * Konfektionierung des Field Arrays[][] mit StorageAreas und BoxingPlants (<=N). 
-     * Testen der Objekte auf Koordinaten.
-     */
-    @Test
-    public void testAreaPlantKoord() {
-        // Field[N][N] = [i][i] (angefangen mit 2x2),
-        // NUMBOXINGPLANTS = j (1 bis N)
-        for (int i = 2; i <= maxTestFieldLength; i++) {
-            for (int j = 1; j <= N; j++) {
-                makeTestHouse(i, j, 0, 0, 0);
-
-                // Durchlaufen der BoxingPlants
-                for (int k = 1; k < j; k++) {
-                    assertTrue((testHouse.getWarehouseArr()[i - 1][k]).isBoxingPlant());
-                    assertEquals(k,	(testHouse.getWarehouseArr()[i - 1][k]).coordinateX());
-                    assertEquals(i - 1,	(testHouse.getWarehouseArr()[i - 1][i - 1]).coordinateY());
-
-                    // Folgend auskommentiertes wird ben�tigt, 
-                    // sollte es jemals doch wieder m�glich sein StorageAreas in die unterste Zeile zu setzen...! 
-
-                    //if ((i - (k + 1)) >= 0) {
-                    assertEquals(StorageAreaImpl.class, (testHouse.getWarehouseArr()[i - (k + 1)][i - 1]).getClass());
-                    //} else {
-                    //assertEquals(StorageAreaImpl.class, (testHouse.getWarehouseArr()[i-2][i - 1]).getClass());
-                    //System.out.println("Sonderfall Zeilenwechsel:" + (testHouse.getWarehouseArr()[i-2][i - 1]).coordinateX()+","+(testHouse.getWarehouseArr()[i-2][i - 1]).coordinateY());
-                    //System.out.println(testHouse);
-                    //}
-                }
-            }
-        }
-    }
-
-    /**
-     * Erzeugen von Item-Objekten mit bestimmten Eigenschaften (ID, Position & Size) 
-     * und deren Zuweisung an bestimmte StorageAreas ist mit der Einschränkung möglich, 
-     * dass sich hier nun auch Boxingplants im Array befinden bis zu denen nur getestet werden darf.
-     * 
-     * Befuellte StorageAreas mit Items (durchnummeriert). 
-     * Testen auf ID, Position und size der einzelnen Item-Objekte (durchlaufen des Arrays nur bis zu den BoxingPlants).
-     */
-    @Test
-    public void testItemsPlants() {
-        // Field[N][N] = [i][i] (angefangen mit 2x2), 
-        // NUMBOXINGPLANTS = j (1 bis N), 
-        // ORDERMAXSIZE = 1
-        for (int i = 2; i <= maxTestFieldLength; i++) {
-            for (int j = 1; j <= N; j++) {
-                makeTestHouse(i, j, 1, 0, 0);
-
-                // ID= 1 bis maxTestFieldLength, poductPos: k=X, j=Y (aufsteigend), 
-                // size des item immer =1, da ORDERMAXSIZE=1 festgelegt wird.
-                int idCnt = 1;
-                for (int x = 0; x < i; x++) {
-                    for (int k = 0; k < i; k++) {
-                        // Items bis zur ersten BoxingPlant prüfen 
-                        if ((testHouse.getWarehouseArr()[x][k]).isBoxingPlant()) {
-                            assertTrue((testHouse.getWarehouseArr()[x][k]).isBoxingPlant());
-                        } else {
-                            assertEquals(idCnt, ((StorageArea) testHouse.getWarehouseArr()[x][k]).item().id());
-                            idCnt++;
-
-                            assertEquals(k, ((StorageArea) testHouse.getWarehouseArr()[x][k]).item().productPosX());
-                            assertEquals(x, ((StorageArea) testHouse.getWarehouseArr()[x][k]).item().productPosY());
-
-                            assertEquals(1, ((StorageArea) testHouse.getWarehouseArr()[x][k]).item().size());
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    /**
+//     * Erzeugen von Item-Objekten mit bestimmten Eigenschaften (ID, Position & Size) 
+//     * und deren Zuweisung an bestimmte StorageAreas ist moeglich.
+//     * 
+//     * Fuellen der StorageAreas mit Items (durchnummeriert). --> passiert automatisch in der factory!
+//     * Testen auf ID, Position und size der einzelnen Item-Objekte.
+//     */
+//    @Test
+//    public void testItems() {
+//        // Field[N][N] = [i][i] - start bei i=2, da unterste zeile immer Boxingplants vorbehalten ist,
+//        // ORDERMAXSIZE = 1
+//        for (int i = 2; i <= maxTestFieldLength; i++) {
+//            makeTestHouse(i, 0, 1, 0, 0);
+//
+//            // ID= 1 bis maxTestFieldLength, poductPos: k=X, j=Y (aufsteigend), 
+//            // size des item immer =1, da ORDERMAXSIZE=1 festgelegt wird.
+//            int idCnt = 1;
+//            for (int j = 0; j < i-1; j++) {
+//                for (int k = 0; k < i; k++) {
+//                    assertEquals(idCnt, ((StorageArea) testHouse.getWarehouseArr()[j][k]).item().id());
+//                    idCnt++;
+//
+//                    assertEquals(k, ((StorageArea) testHouse.getWarehouseArr()[j][k]).item().productPosX());
+//                    assertEquals(j, ((StorageArea) testHouse.getWarehouseArr()[j][k]).item().productPosY());
+//
+//                    assertEquals(1, ((StorageArea) testHouse.getWarehouseArr()[j][k]).item().size());
+//                }
+//            }
+//        }
+//    }
+//
+//    /**
+//     * Das Befüllen des Arrays mit einer bestimmten Anzahl von StorageAreas und BoxingPlants 
+//     * die einem bestimmten Muster entsprechen (BoxingPlants werden hinten im Array eingefügt) 
+//     * wird sichergestellt.
+//     * 
+//     * Konfektionierung des Field Arrays[][] mit StorageAreas und BoxingPlants (<=N). 
+//     * Testen der Objekte auf Koordinaten.
+//     */
+//    @Test
+//    public void testAreaPlantKoord() {
+//        // Field[N][N] = [i][i] (angefangen mit 2x2),
+//        // NUMBOXINGPLANTS = j (1 bis N)
+//        for (int i = 2; i <= maxTestFieldLength; i++) {
+//            for (int j = 1; j <= N; j++) {
+//                makeTestHouse(i, j, 0, 0, 0);
+//
+//                // Durchlaufen der BoxingPlants
+//                for (int k = 1; k < j; k++) {
+//                    assertTrue((testHouse.getWarehouseArr()[i - 1][k]).isBoxingPlant());
+//                    assertEquals(k,	(testHouse.getWarehouseArr()[i - 1][k]).coordinateX());
+//                    assertEquals(i - 1,	(testHouse.getWarehouseArr()[i - 1][i - 1]).coordinateY());
+//
+//                    // Folgend auskommentiertes wird ben�tigt, 
+//                    // sollte es jemals doch wieder m�glich sein StorageAreas in die unterste Zeile zu setzen...! 
+//
+//                    //if ((i - (k + 1)) >= 0) {
+//                    assertEquals(StorageAreaImpl.class, (testHouse.getWarehouseArr()[i - (k + 1)][i - 1]).getClass());
+//                    //} else {
+//                    //assertEquals(StorageAreaImpl.class, (testHouse.getWarehouseArr()[i-2][i - 1]).getClass());
+//                    //System.out.println("Sonderfall Zeilenwechsel:" + (testHouse.getWarehouseArr()[i-2][i - 1]).coordinateX()+","+(testHouse.getWarehouseArr()[i-2][i - 1]).coordinateY());
+//                    //System.out.println(testHouse);
+//                    //}
+//                }
+//            }
+//        }
+//    }
+//
+//    /**
+//     * Erzeugen von Item-Objekten mit bestimmten Eigenschaften (ID, Position & Size) 
+//     * und deren Zuweisung an bestimmte StorageAreas ist mit der Einschränkung möglich, 
+//     * dass sich hier nun auch Boxingplants im Array befinden bis zu denen nur getestet werden darf.
+//     * 
+//     * Befuellte StorageAreas mit Items (durchnummeriert). 
+//     * Testen auf ID, Position und size der einzelnen Item-Objekte (durchlaufen des Arrays nur bis zu den BoxingPlants).
+//     */
+//    @Test
+//    public void testItemsPlants() {
+//        // Field[N][N] = [i][i] (angefangen mit 2x2), 
+//        // NUMBOXINGPLANTS = j (1 bis N), 
+//        // ORDERMAXSIZE = 1
+//        for (int i = 2; i <= maxTestFieldLength; i++) {
+//            for (int j = 1; j <= N; j++) {
+//                makeTestHouse(i, j, 1, 0, 0);
+//
+//                // ID= 1 bis maxTestFieldLength, poductPos: k=X, j=Y (aufsteigend), 
+//                // size des item immer =1, da ORDERMAXSIZE=1 festgelegt wird.
+//                int idCnt = 1;
+//                for (int x = 0; x < i; x++) {
+//                    for (int k = 0; k < i; k++) {
+//                        // Items bis zur ersten BoxingPlant prüfen 
+//                        if ((testHouse.getWarehouseArr()[x][k]).isBoxingPlant()) {
+//                            assertTrue((testHouse.getWarehouseArr()[x][k]).isBoxingPlant());
+//                        } else {
+//                            assertEquals(idCnt, ((StorageArea) testHouse.getWarehouseArr()[x][k]).item().id());
+//                            idCnt++;
+//
+//                            assertEquals(k, ((StorageArea) testHouse.getWarehouseArr()[x][k]).item().productPosX());
+//                            assertEquals(x, ((StorageArea) testHouse.getWarehouseArr()[x][k]).item().productPosY());
+//
+//                            assertEquals(1, ((StorageArea) testHouse.getWarehouseArr()[x][k]).item().size());
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
     /**
