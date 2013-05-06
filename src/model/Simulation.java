@@ -167,7 +167,7 @@ public class Simulation  implements IControl { //in fassung 1.0 extends Simulati
                  int dx = 0;
                  int dy = 0;
                  int[] dest = rob.Target();
-                 if (rob.getOrder() != null) if (!rob.getOrder().getMap().isEmpty()) {
+                 if (rob.Order() != null) if (!rob.Order().getMap().isEmpty()) {
                      dx = dest[1];
                      dy = dest[0];
                  } else {

@@ -280,7 +280,7 @@ public class Robot implements IRobot {
     }
 
     @Override
-    public Order getOrder() {
+    public Order Order() {
         return this.order;
     }
 

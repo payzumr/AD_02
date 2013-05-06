@@ -175,7 +175,7 @@ public class HauptFrame extends JFrame implements IHauptFrame {
                     String id = "na";
                 	for(int i = 0; i < whouse.Bplants().length; i++)
                 	{
-                		if((whouse.Bplants()[i].getRobot().getOrder() != null) && (whouse.Bplants()[i].getRobot().getOrder().OrderId().equals(map.OrderId())))
+                		if((whouse.Bplants()[i].getRobot().Order() != null) && (whouse.Bplants()[i].getRobot().Order().OrderId().equals(map.OrderId())))
                 		{
                 			id = String.valueOf(whouse.Bplants()[i].getRobot().id());
                 		}
@@ -188,10 +188,10 @@ public class HauptFrame extends JFrame implements IHauptFrame {
         }
 
         //System.out.println("-----------------------End Auftraege-------------------");
-        if(rob.getOrder() != null) if (!rob.getOrder().getMap().keySet().isEmpty()) {
+        if(rob.Order() != null) if (!rob.Order().getMap().keySet().isEmpty()) {
 
-            Item realitem = (rob.getOrder().getMap().keySet()).iterator().next();
-            int menge   = rob.getOrder().getMap().values().iterator().next();
+            Item realitem = (rob.Order().getMap().keySet()).iterator().next();
+            int menge   = rob.Order().getMap().values().iterator().next();
             int gewicht = realitem.size();
             textFenster.refresh(rob.id(), rob.CurrentPosX(),
                     rob.CurrentPosY(), xZiel, yZiel,

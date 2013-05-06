@@ -25,7 +25,7 @@ public interface IRobot {
      * Gibt die Item map des Robots nach aussen um seine Auftraege abgreifbar zu machen
      * @return Item MAP
      */
-    public Order getOrder();
+    public Order Order();
     
     //getter
     public int StartPosX();
