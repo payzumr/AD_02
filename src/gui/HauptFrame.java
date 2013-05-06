@@ -5,30 +5,23 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import java.io.File;
-import java.text.DecimalFormat;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Queue;
 import java.util.Set;
-import java.util.TreeMap;
-
-import javax.swing.filechooser.FileFilter;
-import javax.swing.plaf.IconUIResource;
 
 import model.*;
-import model.Robot;
+import model.IRobot;
 
-public class HauptFrame extends JFrame implements HauptFrame_interface {
+public class HauptFrame extends JFrame implements IHauptFrame {
 
-    /* --------- Variablen ------------ */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -268172097860439460L;
+	/* --------- Variablen ------------ */
     private final Simulation controller;
-    private JMenuItem startEntry;
     private JPanel hauptpane;
     private JLabel[][] feld;
-    private textFenster textFenster;
+    private TextFenster textFenster;
     private JToggleButton pauseButton;
     private boolean paused = false;
     private static HauptFrame myMainWindow;
@@ -162,14 +155,14 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
         }
 
         pack();
-        textFenster = new textFenster(robots);
+        textFenster = new TextFenster(robots);
         textFenster.setBounds(myMainWindow.getX() + myMainWindow.getWidth(), myMainWindow.getY(), 100, myMainWindow.getHeight());
 
     }
 
 
     /* Aktualisiert Warenhaus ansicht */
-    public void showRobotState( final Warehouse whouse, final Robot rob, final Set<Item> item, 
+    public void showWarehouseState( final IWarehouse whouse, final IRobot rob, final Set<Item> item, 
             final int loadTime, final int xZiel, final int yZiel, final int packingTime ) {
        
     	String output;
@@ -266,12 +259,12 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
     }
 
     /* Zeigt Fehlermeldung bei Fehlverhalten */
-    public void abbruch(String fehlermeldung) {
+    public void showErrors(String fehlermeldung) {
         textFenster.abbruch(fehlermeldung);
     }
 
     /* Zeigt �bersicht nach erfolgreichem Abarbeiten der Auftraege */
-    public void beendet(int benoetigteTakte, int summeAuftraege) {
+    public void showFinalOverview(int benoetigteTakte, int summeAuftraege) {
         textFenster.beendet(benoetigteTakte, summeAuftraege);
     }
 }

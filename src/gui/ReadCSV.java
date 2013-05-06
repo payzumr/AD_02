@@ -8,10 +8,9 @@ import model.*;
 public class ReadCSV {
     private String delimiter;
     private final ArrayList<String> liste;
-    private ArrayList orderArr;
+    private List<String> orderArr;
 	private final Set<Item> itemSet = new TreeSet<>();
 	private String zeile = null;
-	private int counter = 0;
 
 	// Konstruktor
 	// bekommt als parameter den pfad der ini datei als string übergeben.
@@ -42,6 +41,7 @@ public class ReadCSV {
 			// if(zeile.length()!=1)
 			orderArr.add(zeile);
 		}
+		tmpFile.close();
 	}
 
 	// config.csv laden und die Variablen initialisieren
@@ -68,6 +68,8 @@ public class ReadCSV {
 		Simulation.NUMROBOTS = Simulation.N;
 		Simulation.CLTIME = Integer.parseInt(zeile.split(delimiter)[2]);
 		Simulation.PPTIME = Integer.parseInt(zeile.split(delimiter)[3]);
+		
+		tmpFile.close();
 	}
 
 	// generiert eine Liste mit der vorgegeben lagergröße
@@ -137,7 +139,7 @@ public class ReadCSV {
 			}
 
 		}
-
+		tmpFile.close();
 		return itemList;
 
 	}

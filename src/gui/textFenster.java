@@ -5,18 +5,15 @@
 package gui;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
-import java.io.File;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.plaf.IconUIResource;
+public class TextFenster extends JFrame implements ITextFenster  {
 
-import model.*;
-
-public class textFenster extends JFrame implements textFenster_interface  {
-
-    private final JLabel[][] zeile;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5584845292768774001L;
+	private final JLabel[][] zeile;
     private final JPanel hauptpane;
     private final JPanel gridPane;
     private final JScrollPane scrollpane;
@@ -24,7 +21,7 @@ public class textFenster extends JFrame implements textFenster_interface  {
     private final JTextArea pendingOrders;
     private final JPanel robotPane;
 
-    public textFenster(int robots) {
+    public TextFenster(int robots) {
 
         setTitle("Robot Uebersicht");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

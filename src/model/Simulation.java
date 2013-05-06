@@ -35,7 +35,7 @@ import java.util.Set;
  * 
  *
  */
-public class Simulation  implements Control { //in fassung 1.0 extends Simulation so ben�tigen wir keinen eingriff
+public class Simulation  implements IControl { //in fassung 1.0 extends Simulation so ben�tigen wir keinen eingriff
 	// Diese Umgebungsvariablen werden gr��tenteils durch csv �berschrieben 
 	public static  int N = 20;  //  Zeilenanzahl ? 
     public static  int NUMBOXINGPLANTS = 20; //anzahl der waarenfelder --csv
@@ -48,9 +48,9 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
     public static boolean TEST = false; //teststeuerung der vorgruppe
     
     
-    private Warehouse whouse; // internes Handle f�r das Warenhaus
+    private IWarehouse whouse; // internes Handle f�r das Warenhaus
     private boolean simstatus; // interne anzeige f�r den Simulations (takte &sim) //true bei sim run
-    private final HauptFrame_interface gui;
+    private final IHauptFrame gui;
     private Set<Item> itemSet;  //damit die items die in Keiner bestellung vorkommen nicht angezeigt werden
     
     
@@ -79,7 +79,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 			// CSV datei mit den Items wird hier eingelesen 
             List<Item> items = rcsv.readItems();
 
-			whouse = new WarehouseImpl(items); // Warehouse mit Item Liste
+			whouse = new Warehouse(items); // Warehouse mit Item Liste
 													// befuellen
 
 			//Order holen , tmp beinhaltet die Aufträge
@@ -104,7 +104,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 		} catch (IOException e) {
 			System.err.println("Fehler bei Initialisierung");
 			//e.printStackTrace();
-			gui.abbruch("Fehler bei Initialisierung");
+			gui.showErrors("Fehler bei Initialisierung");
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e1) {
@@ -145,12 +145,12 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 				}
 			}
 			
-			whouse.action();//f�hre aktion (stepp / schritt) aus
+			whouse.processOrder();//f�hre aktion (stepp / schritt) aus
 			updateDisplay(whouse.getBplants());			
 			
 			takt++;
 		}
-		gui.beendet(takt, whouse.getOrderQueue().size());
+		gui.showFinalOverview(takt, whouse.getOrderQueue().size());
 	}
 	/**
 	 * Aufruf an die GUI zur Bildaktualisierung mit allen momentanen Robotdaten
@@ -158,9 +158,9 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 	 * HINWEIS! : Ladung des Robots kann nicht übergeben werden, da diese nicht implementiert wurde!
 	 * @param Array der Boxingplants
 	 */
-	 private void updateDisplay(BoxingPlant[] temp){
-         for (BoxingPlant aTemp : temp) {
-             Robot rob = aTemp.getRobot();
+	 private void updateDisplay(IBoxingPlant[] temp){
+         for (IBoxingPlant aTemp : temp) {
+             IRobot rob = aTemp.getRobot();
              if (rob != null) {
                  int loadTime = aTemp.getLoadTime();
                  int packingTime = aTemp.getPackingTime();
@@ -174,7 +174,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
                      dx = rob.getStartPosX();
                      dy = rob.getStartPosY();
                  }
-                 gui.showRobotState(whouse, rob, itemSet, loadTime, dx, dy, packingTime);
+                 gui.showWarehouseState(whouse, rob, itemSet, loadTime, dx, dy, packingTime);
              }
          }
 	 }
