@@ -52,7 +52,7 @@ public class RobotImpl implements Robot {
             this.target = destination();
 
             //asd
-            direction = findWayAlternative(this.target[0], this.target[1]);
+            direction = findWay(this.target[0], this.target[1]);
 
             // Bewegung zum naechsten Feld
             switch (direction) {
