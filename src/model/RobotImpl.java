@@ -14,6 +14,7 @@ public class RobotImpl implements Robot {
     private final Status status;
     private final Field[][] field;
     private int blockCounter = 0;
+    private int loadedTime;
 
     private int[] target;
 
@@ -69,9 +70,13 @@ public class RobotImpl implements Robot {
                 break;
             case 'A':
                 if (order != null && !order.isEmpty()) {
-                    System.out.println("Robot [" + df.format(this.id()) + "]: Lade Item bei Y: " + df.format(currentPosY) + " X: " + df.format(currentPosX));
-                    remove(); // Eintrag entfernen, nachdem der Robot angekommen
-                              // ist
+                    if (getItemLoadTime() > 0) {
+                        loadedTime++;
+                        System.out.println("Robot [" + df.format(this.id()) + "]: Lade Item bei Y: " + df.format(currentPosY) + " X: " + df.format(currentPosX) + " Timeleft: " + df.format(getItemLoadTime()));
+                    } else {
+                        remove(); // Eintrag entfernen, nachdem der Robot angekommen
+                                  // ist
+                    }
                 } else {
                     busy = false;
                 }
@@ -327,7 +332,12 @@ public class RobotImpl implements Robot {
         Entry<Item, Integer> orderEntry = ((TreeMap<Item, Integer>)order.getMap()).firstEntry();
         Item item = orderEntry.getKey();
         Integer itemCount = orderEntry.getValue();
-        return item.size() * itemCount;
+        int loadtime = item.size() * itemCount;
+        if(loadtime - loadedTime > 0) {
+            return loadtime - loadedTime;
+        } else {
+            return 0;
+        }
     }
 
 }

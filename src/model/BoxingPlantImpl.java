@@ -39,21 +39,12 @@ public class BoxingPlantImpl implements BoxingPlant {
             // und loesche die Bestellliste
             System.out.println("BoxingPlant [" + df.format(this.id()) + "]: Bekomme Order " + order.toString());
             assignedrobot.receiveOrder(order);
-            loadtime = this.getLoadTime();
             order = null;
-        }
-
-        if(lastAction == 'A') {
-            if(order == null && assignedrobot.isBusy() && loadtime > 0) {
-                loadtime--;
-            } else {
-                lastAction = assignedrobot.action();
-            }
         }
 
         // Wenn der Roboter unterwegs ist, wird nur eine action 
         // nach Ablauf des Takt counters ausgeloest
-        if(lastAction != 'A' && order == null && assignedrobot.isBusy() && temp_CLTIME_cnt-1 != 0) {
+        if(order == null && assignedrobot.isBusy() && temp_CLTIME_cnt-1 != 0) {
             temp_CLTIME_cnt--;
         } else {
             assignedrobot.action();
@@ -164,6 +155,6 @@ public class BoxingPlantImpl implements BoxingPlant {
     }
 
     public int getLoadTime() {
-        return assignedrobot.getItemLoadTime() * temp_CLTIME;
+        return assignedrobot.getItemLoadTime();
     }
 }
