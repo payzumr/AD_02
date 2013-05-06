@@ -41,7 +41,7 @@ public class RobotImpl implements Robot {
      * BoxingPlant zurueck.
      */
     public char action() {
-        char direction = 0;
+        char direction;
         if (order != null) {
 
                 this.target = destination();

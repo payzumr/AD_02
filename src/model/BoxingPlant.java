@@ -43,7 +43,7 @@ public interface BoxingPlant extends Field {
 
     //JUnit
     public Robot getRobot();
-    public int getAmountOfRobots();
+
     public Status getStatus();
     public int coordinateX();
     public int coordinateY();

@@ -24,21 +24,17 @@ import model.Robot;
 public class HauptFrame extends JFrame implements HauptFrame_interface {
 
     /* --------- Variablen ------------ */
-    private Simulation controller;
+    private final Simulation controller;
     private JMenuItem startEntry;
     private JPanel hauptpane;
-    JLabel[][] feld;
-    textFenster textFenster;
+    private JLabel[][] feld;
+    private textFenster textFenster;
     private JToggleButton pauseButton;
     private boolean paused = false;
-    static HauptFrame myMainWindow;
-    int[] RobotPosX;
-    int[] RobotPosY;
+    private static HauptFrame myMainWindow;
+    private int[] RobotPosX;
+    private int[] RobotPosY;
     private int fields;
-    // Festlegen der max Fenstergr��e
-    private Dimension screen = new Dimension((int) ((Toolkit
-                    .getDefaultToolkit().getScreenSize().width) * 0.75),
-            (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * 0.75));
 
     public HauptFrame(Simulation controller) {
         this.controller = controller;
@@ -48,6 +44,9 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(200, 200);
         setMinimumSize(new Dimension(400, 400));
+        Dimension screen = new Dimension((int) ((Toolkit
+                .getDefaultToolkit().getScreenSize().width) * 0.75),
+                (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * 0.75));
         setMaximumSize(screen);
         erzeugeMenus();
         erzeugeAnzeige();
@@ -106,7 +105,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
     //
     //  }
 
-    public void erzeugeAnzeige() {
+    void erzeugeAnzeige() {
         getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
         hauptpane = new JPanel();
@@ -194,14 +193,14 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
         textFenster = new textFenster(robots);
         textFenster.setBounds(myMainWindow.getX() + myMainWindow.getWidth(), myMainWindow.getY(), 100, myMainWindow.getHeight());
 
-    };
+    }
 
 
     /* Aktualisiert Warenhaus ansicht */
     public void showRobotState( final Warehouse whouse, final Robot rob, final Set<Item> item, 
             final int loadTime, final int xZiel, final int yZiel, final int packingTime ) {
        
-    	String output = new String();
+    	String output;
         output = "OrderId   ItemId   Gewicht   Menge   Robot\n";
         //�bersicht aktualisieren
         if (!whouse.getOrder().isEmpty()) {
@@ -211,7 +210,7 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
                     String id = "na";
                 	for(int i = 0; i < whouse.getBplants().length; i++)
                 	{
-                		if((whouse.getBplants()[i].getRobot().getOrder() != null) && (whouse.getBplants()[i].getRobot().getOrder().getOrderId() == map.getOrderId()))
+                		if((whouse.getBplants()[i].getRobot().getOrder() != null) && (whouse.getBplants()[i].getRobot().getOrder().getOrderId().equals(map.getOrderId())))
                 		{
                 			id = String.valueOf(whouse.getBplants()[i].getRobot().id());
                 		}
@@ -318,10 +317,10 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
     /* Zeigt Fehlermeldung bei Fehlverhalten */
     public void abbruch(String fehlermeldung) {
         textFenster.abbruch(fehlermeldung);
-    };
+    }
 
     /* Zeigt �bersicht nach erfolgreichem Abarbeiten der Auftraege */
     public void beendet(int benoetigteTakte, int summeAuftraege) {
         textFenster.beendet(benoetigteTakte, summeAuftraege);
-    };
     }
+}
