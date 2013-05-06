@@ -43,7 +43,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
     public static  int ORDERMAXSIZE = 50; //maximale bestellgr��e
     public static  int MAXCAPACITY = ORDERMAXSIZE; //maximale roboter tragekapazit�t
     public static  int NUMROBOTS = NUMBOXINGPLANTS; //Anzahl der robotter
-    public static  int CLTIME = 1; //vermutung irgenwas mit der verpackzeit ????
+    public static  int CLTIME = 5; //vermutung irgenwas mit der verpackzeit ????
     public static  int PPTIME = 5; //vermutung irgenwas mit der verpackzeit ????
     public static  int refreshtime = 500  ; // die Zeit bis zum n�chsten schritt in ms 10*1000 = 10 Sekunden
     public static boolean TEST = false; //teststeuerung der vorgruppe
@@ -188,7 +188,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
 	     for(int i = 0; i < temp.length ; i++){
 	         Robot rob = temp[i].getRobot();
 	         if (rob != null){
-	        	 int loadTime = temp[i].getTemp_CLTIME_cnt();
+	        	 int loadTime = temp[i].getLoadTime();
 	        	 int packingTime = temp[i].getPackingTime();
 	        	 int dx = 0;
 	        	 int dy = 0;
