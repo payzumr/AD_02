@@ -11,7 +11,6 @@ public class RobotImpl implements Robot {
     private int currentPosX;
     private int currentPosY;
     private boolean busy;
-    private final Status status;
     private final Field[][] field;
     private int blockCounter = 0;
     private int loadedTime;
@@ -28,7 +27,6 @@ public class RobotImpl implements Robot {
         this.currentPosX = startPosX;
         this.currentPosY = startPosY;
         this.field = field;
-        this.status = Status.IDLE;
         busy = false;
     }
 
@@ -303,11 +301,6 @@ public class RobotImpl implements Robot {
     @Override
     public int getCurrentPosY() {
         return this.currentPosY;
-    }
-
-    @Override
-    public Status getStatus() {
-        return this.status;
     }
 
     public String getOrderInfos() {
