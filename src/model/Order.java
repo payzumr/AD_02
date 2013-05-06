@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class Order {
+public class Order implements IOrder {
 
     private final Map<Item, Integer> order;
     private final String orderId;
