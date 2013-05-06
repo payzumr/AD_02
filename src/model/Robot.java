@@ -70,11 +70,9 @@ public class Robot implements IRobot {
                         loadedTime++;
                         System.out.println("Robot [" + df.format(this.id()) + "]: Lade Item bei Y: " + df.format(currentPosY) + " X: " + df.format(currentPosX) + " Timeleft: " + df.format(getItemLoadTime()));
                     } else {
-                        remove(); // Eintrag entfernen, nachdem der Robot angekommen
-                                  // ist                        
+                        remove(); // Eintrag entfernen, nachdem der Robot angekommen ist                       
                     }
                 } else {
-                	loadedTime = 0;
                     busy = false;
                 }
                 break;
@@ -200,7 +198,7 @@ public class Robot implements IRobot {
 
         // Robot auf uebergebenem Feld anmelden
         field[positionY][positionX].registerRobot(this);
-
+    	loadedTime = 0; 
         return field[positionY][positionX].robotCount();
     }
 
@@ -278,7 +276,6 @@ public class Robot implements IRobot {
     }
 
     public String getOrderInfos() {
-        // System.out.println(order.toString());
         return order.toString();
     }
 
