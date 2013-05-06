@@ -1,76 +1,78 @@
 package model;
 
-public interface Field {
+public class Field implements IField {
+    private int amountOfRobots;
+    private IRobot robot;
+    private final int coordinateX;
+    private final int coordinateY;
+    private int id;
 
-    /*
-     * Eingabe: keine
-     * 
-     * Ausgabe: Ausgabe: Ein Integer-Wert wird zurueckgegeben.
-     * 
-     * Funktion: Gibt die Anzahl von Robots auf einem Field als Integer-Wert
-     * zurueck.
-     */
-    public int hasRobots();
+    public Field(int amountOfRobots, int robotId, int coordinateX, int coordinateY) {
+        this.amountOfRobots = amountOfRobots;
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
+    }
 
-    /*
-     * Eingabe: Ein Robot Objekt wird uebergeben.
-     * 
-     * Ausgabe: keine
-     * 
-     * Funktion: Die uebergebene Robot ID wird in der Objektvariable robotId von
-     * Field gespeichert. amountOfRobots wird inkrementiert.
-     */
-    public void reg(Robot bot);
+    public Field(int id, int coordinateX, int coordinateY) {
+        amountOfRobots = 0;
+        this.id = id;
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
+    }
+    
+    public Field(Item item) {
+      amountOfRobots = 0;
 
-    /*
-     * Eingabe: keine
-     * 
-     * Ausgabe: keine
-     * 
-     * Funktion: amountOfRobots wird dekrementiert. Die aktuelle Objektvariable
-     * robotId wird auf Integer-Wert 0 gesetzt.
-     */
-    public void unReg();
+      coordinateX = item.productPosX();
+      coordinateY = item.productPosY();
+  }
 
-    /*
-     * Eingabe: keine
-     * 
-     * Ausgabe: Ein Integer-Wert wird zurueckgegeben.
-     * 
-     * Funktion: Gibt die aktuelle robotId als Integer-Wert zurueck.
-     */
-    public int robotID();
+    public int robotCount() {
+        return amountOfRobots;
+    }
 
-    /*
-     * Eingabe: keine
-     * 
-     * Ausgabe: Ein Integer-Wert wird zurueckgegeben.
-     * 
-     * Funktion: Gibt die aktuelle X-Koordinate als Integer-Wert zurueck.
-     */
-    public int coordinateX();
+    public boolean isBoxingPlant() {
+        return this.id != 0;
+    }
 
-    /*
-     * Eingabe: keine
-     * 
-     * Ausgabe: Ein Integer-Wert wird zurueckgegeben.
-     * 
-     * Funktion: Gibt die aktuelle Y-Koordinate als Integer-Wert zurueck.
-     */
-    public int coordinateY();
+    public void registerRobot(IRobot bot) {
+        amountOfRobots++;
+        robot = bot;
+    }
 
-    /*
-     * Eingabe: keine
-     * 
-     * Ausgabe: Ein Boolean wird zurueckgegeben.
-     * 
-     * Funktion: Gibt als Boolean zurueck, ob das aktuelle Field ein BoxingPlant
-     * ist oder nicht.
-     */
-    public boolean isBoxingPlant();
+    public void unregisterRobot() {
+        amountOfRobots--;
+        robot = null;
+    }
 
-    /*
-     * Ausgabe: Gibt das Zielfeld des Robots der darauf steht zurueck
-     */
-    public int[] getTarget();
+    public int robotID() {
+        if (robot == null) {
+            return 0;
+        }
+        return robot.id();
+    }
+
+    public int[] getTarget() {
+        if (robot != null) {
+            return robot.getTarget();
+        } else {
+            int i[] = { -1, -1 };
+            return i;
+        }
+    }
+
+    @Override
+    public int coordinateX() {
+        return this.coordinateX;
+    }
+
+    @Override
+    public int coordinateY() {
+        return this.coordinateY;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
 }
