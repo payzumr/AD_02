@@ -28,8 +28,8 @@ public interface IWarehouse {
     public boolean notDone();
 
     //JUnit
-    public IField[][] getWarehouseArr();
-    public Queue<Order> getOrderQueue();
-    public List<Order> getOrder();
-    public IBoxingPlant[] getBplants();
+    public IField[][] WarehouseArr();
+    public Queue<Order> OrderQueue();
+    public List<Order> Order();
+    public IBoxingPlant[] Bplants();
 }

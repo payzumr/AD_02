@@ -33,7 +33,7 @@ public interface IBoxingPlant extends IField {
 
     public int coordinateX();
     public int coordinateY();
-    public int getTemp_CLTIME_cnt();
-    public int getPackingTime();
-    public int getLoadTime();
+    public int Temp_CLTIME_cnt();
+    public int packingTime();
+    public int loadTime();
 }

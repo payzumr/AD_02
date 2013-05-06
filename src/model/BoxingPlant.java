@@ -122,9 +122,9 @@ public class BoxingPlant implements IBoxingPlant {
         return robotOnField.id();
     }
     
-    public int[] getTarget(){
+    public int[] Target(){
         if(robotOnField != null){
-            return robotOnField.getTarget();
+            return robotOnField.Target();
         }
         int i[] = {-1,-1};
         return i;
@@ -134,17 +134,17 @@ public class BoxingPlant implements IBoxingPlant {
         return assignedrobot;
     }
 
-    public int getTemp_CLTIME_cnt()
+    public int Temp_CLTIME_cnt()
     {
     	return this.temp_CLTIME_cnt;
     }
     
-    public int getPackingTime()
+    public int packingTime()
     {
     	return this.packingTime;
     }
 
-    public int getLoadTime() {
-        return assignedrobot.getItemLoadTime();
+    public int loadTime() {
+        return assignedrobot.ItemLoadTime();
     }
 }

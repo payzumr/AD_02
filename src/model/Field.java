@@ -52,9 +52,9 @@ public class Field implements IField {
         return robot.id();
     }
 
-    public int[] getTarget() {
+    public int[] Target() {
         if (robot != null) {
-            return robot.getTarget();
+            return robot.Target();
         } else {
             int i[] = { -1, -1 };
             return i;

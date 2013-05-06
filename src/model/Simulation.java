@@ -146,11 +146,11 @@ public class Simulation  implements IControl { //in fassung 1.0 extends Simulati
 			}
 			
 			whouse.processOrder();//f�hre aktion (stepp / schritt) aus
-			updateDisplay(whouse.getBplants());			
+			updateDisplay(whouse.Bplants());			
 			
 			takt++;
 		}
-		gui.showFinalOverview(takt, whouse.getOrderQueue().size());
+		gui.showFinalOverview(takt, whouse.OrderQueue().size());
 	}
 	/**
 	 * Aufruf an die GUI zur Bildaktualisierung mit allen momentanen Robotdaten
@@ -162,17 +162,17 @@ public class Simulation  implements IControl { //in fassung 1.0 extends Simulati
          for (IBoxingPlant aTemp : temp) {
              IRobot rob = aTemp.getRobot();
              if (rob != null) {
-                 int loadTime = aTemp.getLoadTime();
-                 int packingTime = aTemp.getPackingTime();
+                 int loadTime = aTemp.loadTime();
+                 int packingTime = aTemp.packingTime();
                  int dx = 0;
                  int dy = 0;
-                 int[] dest = rob.getTarget();
+                 int[] dest = rob.Target();
                  if (rob.getOrder() != null) if (!rob.getOrder().getMap().isEmpty()) {
                      dx = dest[1];
                      dy = dest[0];
                  } else {
-                     dx = rob.getStartPosX();
-                     dy = rob.getStartPosY();
+                     dx = rob.StartPosX();
+                     dy = rob.StartPosY();
                  }
                  gui.showWarehouseState(whouse, rob, itemSet, loadTime, dx, dy, packingTime);
              }

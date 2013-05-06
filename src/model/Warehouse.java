@@ -133,21 +133,21 @@ public class Warehouse implements IWarehouse {
    
 
     @Override
-    public IField[][] getWarehouseArr() {
+    public IField[][] WarehouseArr() {
         return this.warehouse;
     }
 
     @Override
-    public Queue<Order> getOrderQueue() {
+    public Queue<Order> OrderQueue() {
         return this.orderQueue;
     }
     
-    public List<Order> getOrder() {
+    public List<Order> Order() {
     	return this.orderCopy;
     }
 
     @Override
-    public IBoxingPlant[] getBplants() {
+    public IBoxingPlant[] Bplants() {
         return this.bplants;
     }
 

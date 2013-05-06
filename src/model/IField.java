@@ -56,5 +56,5 @@ public interface IField {
      * 
      * @return int[] - das aktuelle Ziel des Robots auf dem Field.
      */
-    public int[] getTarget();
+    public int[] Target();
 }

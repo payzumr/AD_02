@@ -28,10 +28,10 @@ public interface IRobot {
     public Order getOrder();
     
     //getter
-    public int getStartPosX();
-    public int getStartPosY();
-    public int getCurrentPosX();
-    public int getCurrentPosY();
+    public int StartPosX();
+    public int StartPosY();
+    public int CurrentPosX();
+    public int CurrentPosY();
     public boolean isBusy();
     public int id();
     
@@ -39,9 +39,9 @@ public interface IRobot {
      * getter fuer die momentane Destination des Robots
      * @return Zielkoordinaten (gedreht [Y][X])
      */
-    public int[] getTarget();
+    public int[] Target();
     
-    public String getOrderInfos();
+    public String OrderInfos();
 
-    public int getItemLoadTime();
+    public int ItemLoadTime();
 }

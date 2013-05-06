@@ -23,6 +23,6 @@ public interface IOrder {
      * 
      * Ausgabe:  Die Id der Order als String
      */
-    public String getOrderId();
+    public String OrderId();
     
 }

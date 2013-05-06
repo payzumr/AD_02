@@ -66,9 +66,9 @@ public class Robot implements IRobot {
                 break;
             case 'A':
                 if (order != null && !order.isEmpty()) {
-                    if (getItemLoadTime() > 0) {
+                    if (ItemLoadTime() > 0) {
                         loadedTime++;
-                        System.out.println("Robot [" + df.format(this.id()) + "]: Lade Item bei Y: " + df.format(currentPosY) + " X: " + df.format(currentPosX) + " Timeleft: " + df.format(getItemLoadTime()));
+                        System.out.println("Robot [" + df.format(this.id()) + "]: Lade Item bei Y: " + df.format(currentPosY) + " X: " + df.format(currentPosX) + " Timeleft: " + df.format(ItemLoadTime()));
                     } else {
                         remove(); // Eintrag entfernen, nachdem der Robot angekommen ist                       
                     }
@@ -123,8 +123,8 @@ public class Robot implements IRobot {
      */    
     private char findWay(int destinationY, int destinationX) {
         if (destinationX != currentPosX && fieldFree(currentPosY, currentPosX + Integer.compare(destinationX, currentPosX))) {
-            if(currentPosY + 1 < field.length &&  currentPosY + 1 < destinationY && field[currentPosY + 1][currentPosX].getTarget()[1] == destinationX
-                    && field[currentPosY + 1][currentPosX].getTarget()[0] < destinationY){
+            if(currentPosY + 1 < field.length &&  currentPosY + 1 < destinationY && field[currentPosY + 1][currentPosX].Target()[1] == destinationX
+                    && field[currentPosY + 1][currentPosX].Target()[0] < destinationY){
                 return 0;
             }
             
@@ -134,8 +134,8 @@ public class Robot implements IRobot {
                 return 'E';
             }
         } else if (destinationY != currentPosY && fieldFree(currentPosY + Integer.compare(destinationY, currentPosY), currentPosX)) {
-            if(currentPosX + 1 < field[0].length &&  currentPosX + 1 < destinationX && field[currentPosY][currentPosX + 1].getTarget()[0] == destinationY
-                    && field[currentPosY][currentPosX + 1].getTarget()[1] < destinationX){
+            if(currentPosX + 1 < field[0].length &&  currentPosX + 1 < destinationX && field[currentPosY][currentPosX + 1].Target()[0] == destinationY
+                    && field[currentPosY][currentPosX + 1].Target()[1] < destinationX){
                 return 0;
             }
             
@@ -146,10 +146,10 @@ public class Robot implements IRobot {
             }
         } else if (destinationY == currentPosY && destinationX == currentPosX) {
             return 'A';
-        } else if ((currentPosY == destinationY || field[currentPosY + Integer.compare(destinationY, currentPosY)][currentPosX].getTarget()[0] == currentPosY
-                && field[currentPosY + Integer.compare(destinationY, currentPosY)][currentPosX].getTarget()[1] == currentPosX)
-                && (currentPosX == destinationX || field[currentPosY][currentPosX + Integer.compare(destinationX, currentPosX)].getTarget()[0] == currentPosY
-                && field[currentPosY][currentPosX + Integer.compare(destinationX, currentPosX)].getTarget()[1] == currentPosX)) {
+        } else if ((currentPosY == destinationY || field[currentPosY + Integer.compare(destinationY, currentPosY)][currentPosX].Target()[0] == currentPosY
+                && field[currentPosY + Integer.compare(destinationY, currentPosY)][currentPosX].Target()[1] == currentPosX)
+                && (currentPosX == destinationX || field[currentPosY][currentPosX + Integer.compare(destinationX, currentPosX)].Target()[0] == currentPosY
+                && field[currentPosY][currentPosX + Integer.compare(destinationX, currentPosX)].Target()[1] == currentPosX)) {
             return evade(destinationY, destinationX);
         }
         if (blockCounter >= 5) {
@@ -256,26 +256,26 @@ public class Robot implements IRobot {
     }
 
     @Override
-    public int getStartPosX() {
+    public int StartPosX() {
         return this.startPosX;
     }
 
     @Override
-    public int getStartPosY() {
+    public int StartPosY() {
         return this.startPosY;
     }
 
     @Override
-    public int getCurrentPosX() {
+    public int CurrentPosX() {
         return this.currentPosX;
     }
 
     @Override
-    public int getCurrentPosY() {
+    public int CurrentPosY() {
         return this.currentPosY;
     }
 
-    public String getOrderInfos() {
+    public String OrderInfos() {
         return order.toString();
     }
 
@@ -285,11 +285,11 @@ public class Robot implements IRobot {
     }
 
     @Override
-    public int[] getTarget() {
+    public int[] Target() {
         return this.target;
     }
 
-    public int getItemLoadTime() {
+    public int ItemLoadTime() {
         if(order == null || order.isEmpty()) {
             return 0;
         }

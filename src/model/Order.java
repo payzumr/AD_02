@@ -25,7 +25,7 @@ public class Order implements IOrder {
         return order;
     }
  
-    public String getOrderId(){
+    public String OrderId(){
     	return this.orderId;
     }
 
