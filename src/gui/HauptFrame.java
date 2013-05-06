@@ -76,34 +76,6 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
         menuDatei.add(endeEntry);
     }
 
-    //  // neu Einlesen der CSV Datei.
-    //  public void aendereParameter() {
-    //      JFileChooser fc = new JFileChooser();
-    //      // Filter damit nur CSV Dateien angezeigt werden
-    //      fc.setFileFilter(new FileFilter() {
-    //          @Override
-    //          public boolean accept(File f) {
-    //              return f.isDirectory()
-    //                      || f.getName().toLowerCase().endsWith(".ini");
-    //          }
-    //
-    //          @Override
-    //          public String getDescription() {
-    //              return "INI";
-    //          }
-    //      });
-    //
-    //      int state = fc.showOpenDialog(null);
-    //      // Wenn "�ffnen" gedr�ckt
-    //      if (state == JFileChooser.APPROVE_OPTION) {
-    //          File file = fc.getSelectedFile();
-    //          controller.readCSV(file.getAbsolutePath());
-    //      }
-    //      // Wenn "Abbrechen" gedr�ckt
-    //      else
-    //          System.out.println("Auswahl abgebrochen");
-    //
-    //  }
 
     void erzeugeAnzeige() {
         getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
@@ -240,24 +212,27 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
 
         }
         
-        for (Item elem : item) {
-            feld[elem.productPosX()][elem.productPosY()].setText(String.valueOf(elem.id()));
-        }
         feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setText("");
         feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setForeground(Color.BLACK);
-
+        for (Item elem : item) {
+        	if(feld[elem.productPosX()][elem.productPosY()] == feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]])
+        	{
+        		feld[elem.productPosX()][elem.productPosY()].setText(String.valueOf(elem.id()));
+        	}
+            
+        }
 
         // Ziel? --> verpacken Bildchen
-        if (rob.getCurrentPosX() == xZiel && rob.getCurrentPosY() == yZiel && yZiel != fields-1) {
+        if (rob.getCurrentPosX() == xZiel && rob.getCurrentPosY() == yZiel && yZiel != fields-1 && loadTime != 0) {
             feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setText("R" + rob.id() + ":" + loadTime );
-            feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.GREEN);
-        }else if(rob.getCurrentPosX() == rob.getStartPosX() && rob.getCurrentPosY() == rob.getStartPosY() ) {
-        	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.GREEN);
+            feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.RED);
+        }else if(rob.getCurrentPosX() == rob.getStartPosX() && rob.getCurrentPosY() == rob.getStartPosY() && packingTime != 0 ) {
+        	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.RED);
         	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setText("R" + rob.id() + ":" + packingTime );
         }else{
         	// Neue Position eintragen
         	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setText("R" + rob.id());
-        	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.GREEN);
+        	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.RED);
         }
         RobotPosX[rob.id()] = rob.getCurrentPosX();
         RobotPosY[rob.id()] = rob.getCurrentPosY(); 
@@ -269,41 +244,18 @@ public class HauptFrame extends JFrame implements HauptFrame_interface {
                 feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setText("");
                 feld[RobotPosX[rob.id()]][RobotPosY[rob.id()]].setForeground(Color.BLACK);
 
-
                 // Ziel? --> verpacken Bildchen
-                if (rob.getCurrentPosX() == xZiel && rob.getCurrentPosY() == yZiel && yZiel != fields-1) {
+                if (rob.getCurrentPosX() == xZiel && rob.getCurrentPosY() == yZiel && yZiel != fields-1 && loadTime != 0) {
                     feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setText("R" + rob.id() + ":" + loadTime );
-                    feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.GREEN);
-                }else if(rob.getCurrentPosX() == rob.getStartPosX() && rob.getCurrentPosY() == rob.getStartPosY() ) {
-                	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.GREEN);
+                    feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.RED);
+                }else if(rob.getCurrentPosX() == rob.getStartPosX() && rob.getCurrentPosY() == rob.getStartPosY() && packingTime != 0) {
+                	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.RED);
                 	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setText("R" + rob.id() + ":" + packingTime );
                 }else{
                 	// Neue Position eintragen
                 	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setText("R" + rob.id());
-                	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.GREEN);
+                	feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.RED);
                 }
-
-//        switch (rob.getStatus()) {
-//            case IDLE:
-//                feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.GREEN);
-//                break;
-//            case BUSY:
-//                feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.YELLOW);
-//                break;
-//            case BOXING:
-//                feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.BLUE);
-//                break;
-//            case MOVING:
-//                feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.WHITE);
-//                break;
-//            case LOADING:
-//                feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.RED);
-//                break;
-//            default:
-//                feld[rob.getCurrentPosX()][rob.getCurrentPosY()].setForeground(Color.PINK);
-//                break;
-//        }
-
 
         // Position zum sp�teren l�lschen zwischenspeichern
         RobotPosX[rob.id()] = rob.getCurrentPosX();
