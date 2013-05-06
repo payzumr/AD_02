@@ -45,7 +45,7 @@ public class Simulation  implements Control { //in fassung 1.0 extends Simulatio
     public static  int NUMROBOTS = NUMBOXINGPLANTS; //Anzahl der robotter
     public static  int CLTIME = 5; //vermutung irgenwas mit der verpackzeit ????
     public static  int PPTIME = 5; //vermutung irgenwas mit der verpackzeit ????
-    private static final int refreshtime = 500  ; // die Zeit bis zum n�chsten schritt in ms 10*1000 = 10 Sekunden
+    private static final int refreshtime = 1000  ; // die Zeit bis zum n�chsten schritt in ms 10*1000 = 10 Sekunden
     public static boolean TEST = false; //teststeuerung der vorgruppe
     
     
