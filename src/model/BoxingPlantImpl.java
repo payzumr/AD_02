@@ -5,10 +5,10 @@ import java.util.Map.Entry;
 
 public class BoxingPlantImpl implements BoxingPlant {
     private int amountOfRobots;
-    private int coordinateX;
-    private int coordinateY;
+    private final int coordinateX;
+    private final int coordinateY;
     private final int ID;
-    private Robot assignedrobot;
+    private final Robot assignedrobot;
     private Robot robotOnField;
     private Order order;
     private boolean busy;
@@ -18,8 +18,8 @@ public class BoxingPlantImpl implements BoxingPlant {
     private int temp_CLTIME_cnt = temp_CLTIME;
     private int loadtime = 0;
     private char lastAction;
-    private DecimalFormat df = new DecimalFormat("00");
-    private Status status;
+    private final DecimalFormat df = new DecimalFormat("00");
+    private final Status status;
 
     public BoxingPlantImpl(int id, int x, int y, Robot bot) {
         assignedrobot = bot;
@@ -131,10 +131,6 @@ public class BoxingPlantImpl implements BoxingPlant {
 
     public Robot getRobot() {
         return assignedrobot;
-    }
-
-    public int getAmountOfRobots() {
-        return amountOfRobots;
     }
 
     public Status getStatus() {
