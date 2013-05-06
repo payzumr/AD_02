@@ -73,11 +73,8 @@ public class BoxingPlantImpl implements BoxingPlant {
       
         // Gesamtgewicht merken
         for (Entry<Item, Integer> element : order.getMap().entrySet()) {
-            packingTime += element.getValue();
+            packingTime += (element.getValue() * element.getKey().size());
         }
-
-        // Reale Packzeit berechnen
-        packingTime *= temp_PPTIME;
 
         // Zustand von busy auf true setzen
         busy = true;
