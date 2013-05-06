@@ -171,7 +171,7 @@ public class HauptFrame extends JFrame implements IHauptFrame {
         if (!whouse.Order().isEmpty()) {
             //System.out.println("-----------------------Auftraege-------------------");
             for ( Order map : whouse.Order()  ) {
-                for (Entry<Item, Integer> entry : map.getMap().entrySet()) {
+                for (Entry<Item, Integer> entry : map.Map().entrySet()) {
                     String id = "na";
                 	for(int i = 0; i < whouse.Bplants().length; i++)
                 	{
@@ -188,10 +188,10 @@ public class HauptFrame extends JFrame implements IHauptFrame {
         }
 
         //System.out.println("-----------------------End Auftraege-------------------");
-        if(rob.Order() != null) if (!rob.Order().getMap().keySet().isEmpty()) {
+        if(rob.Order() != null) if (!rob.Order().Map().keySet().isEmpty()) {
 
-            Item realitem = (rob.Order().getMap().keySet()).iterator().next();
-            int menge   = rob.Order().getMap().values().iterator().next();
+            Item realitem = (rob.Order().Map().keySet()).iterator().next();
+            int menge   = rob.Order().Map().values().iterator().next();
             int gewicht = realitem.size();
             textFenster.refresh(rob.id(), rob.CurrentPosX(),
                     rob.CurrentPosY(), xZiel, yZiel,

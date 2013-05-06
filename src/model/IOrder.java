@@ -16,7 +16,7 @@ public interface IOrder {
      * 
      * Ausgabe:  Die Artikel der Order in einer Map mit dem Item als Key und der Menge als Value
      */
-    public Map<Item, Integer> getMap();
+    public Map<Item, Integer> Map();
 
     /*
      * Eingabe:  keine

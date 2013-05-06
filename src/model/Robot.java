@@ -94,9 +94,9 @@ public class Robot implements IRobot {
     int[] destination() {
 
         // Solange noch Items uebrig sind, hole das erste Item aus der TreeMap
-        if (!order.getMap().isEmpty()) {
-            int[] itemPos = { ((TreeMap<Item, Integer>) order.getMap()).firstKey().productPosY(),
-                    ((TreeMap<Item, Integer>) order.getMap()).firstKey().productPosX() };
+        if (!order.Map().isEmpty()) {
+            int[] itemPos = { ((TreeMap<Item, Integer>) order.Map()).firstKey().productPosY(),
+                    ((TreeMap<Item, Integer>) order.Map()).firstKey().productPosX() };
             return itemPos;
 
             // Wenn keine Items mehr da sind, kehre zur Startposition zurueck
@@ -244,7 +244,7 @@ public class Robot implements IRobot {
      * @return Gibt das entfernte Item zurueck.
      */
     Entry<Item, Integer> remove() {
-        return ((TreeMap<Item, Integer>) order.getMap()).pollFirstEntry();
+        return ((TreeMap<Item, Integer>) order.Map()).pollFirstEntry();
     }
 
     public int id() {
@@ -293,7 +293,7 @@ public class Robot implements IRobot {
         if(order == null || order.isEmpty()) {
             return 0;
         }
-        Entry<Item, Integer> orderEntry = ((TreeMap<Item, Integer>)order.getMap()).firstEntry();
+        Entry<Item, Integer> orderEntry = ((TreeMap<Item, Integer>)order.Map()).firstEntry();
         Item item = orderEntry.getKey();
         Integer itemCount = orderEntry.getValue();
         int loadtime = item.size() * itemCount;

@@ -21,7 +21,7 @@ public class Order implements IOrder {
     }
 
     // Zum Testen
-    public Map<Item, Integer> getMap() {
+    public Map<Item, Integer> Map() {
         return order;
     }
  

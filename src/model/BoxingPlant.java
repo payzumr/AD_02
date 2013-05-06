@@ -67,7 +67,7 @@ public class BoxingPlant implements IBoxingPlant {
         
       
         // Gesamtgewicht merken
-        for (Entry<Item, Integer> element : order.getMap().entrySet()) {
+        for (Entry<Item, Integer> element : order.Map().entrySet()) {
             packingTime += (element.getValue() * element.getKey().size());
         }
 
